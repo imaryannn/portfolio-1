@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bitcount+Grid+Double&family=Shadows+Into+Light&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -22,46 +22,77 @@ body {
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-h1, h2, h3, h4 {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-}
+h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; }
 
-/* Container — max 1400px, fluid padding */
+/* ─── Container ─── */
 .container {
   width: 100%;
   max-width: 1400px;
   margin-inline: auto;
-  padding-inline: clamp(24px, 5vw, 80px);
+  padding-inline: clamp(24px, 6.5vw, 96px);
 }
 
-/* Glass utilities */
+/* ─── Section rhythm ─── */
+.section {
+  padding-block: clamp(80px, 12vw, 160px);
+}
+
+/* ─── Section header ─── */
+.section-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #A8F0C6;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: #F8F5EE;
+}
+
+/* ─── Glass utilities ─── */
 @utility glass {
-  background: rgba(255, 244, 214, 0.06);
+  background: rgba(255, 244, 214, 0.055);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(246, 198, 103, 0.14);
+  border: 1px solid rgba(246, 198, 103, 0.13);
 }
 
 @utility glass-card {
-  background: rgba(29, 77, 58, 0.22);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(29, 77, 58, 0.2);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 255, 255, 0.055);
 }
 
 @utility glass-dark {
-  background: rgba(15, 42, 31, 0.65);
+  background: rgba(15, 42, 31, 0.7);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-/* Scrollbar */
+/* ─── Scrollbar ─── */
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: #0F2A1F; }
 ::-webkit-scrollbar-thumb { background: #1D4D3A; border-radius: 99px; }
 
-input::placeholder, textarea::placeholder { color: rgba(248, 245, 238, 0.28); }
-input, textarea { background: transparent; }
+input::placeholder, textarea::placeholder { color: rgba(248, 245, 238, 0.25); }
+input, textarea { background: transparent; font-family: 'Inter', sans-serif; }
+
+/* ─── Liquid glass text ─── */
+.liquid-glass-text {
+  background: rgba(255, 255, 255, 0.82);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

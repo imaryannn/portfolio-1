@@ -9,94 +9,162 @@ const meta = [
 export default function Contact() {
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const set = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }));
-
-  const inputStyle = {
-    width: "100%",
-    background: "rgba(255,255,255,0.04)",
-    border: "1px solid rgba(255,255,255,0.09)",
-    borderRadius: "14px",
-    padding: "12px 16px",
-    fontSize: "14px",
-    color: "#F8F5EE",
-    outline: "none",
-    transition: "border-color 0.2s",
-  };
+  const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }));
 
   return (
-    <section id="contact" className="py-24">
+    <section id="contact" className="section">
       <div className="container">
-        <div className="grid md:grid-cols-2 gap-16 lg:gap-24 items-start">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "clamp(40px, 7vw, 112px)",
+            alignItems: "center",
+          }}
+        >
 
-          {/* Left */}
+          {/* Left — info */}
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: "#A8F0C6" }}>Contact</p>
+            <p className="section-label">Contact</p>
             <h2
-              className="font-extrabold leading-tight tracking-tight mb-5"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "#F8F5EE" }}
+              className="section-title"
+              style={{ marginBottom: "24px" }}
             >
               Let's build<br />
               <span style={{ color: "#F6C667" }}>something great.</span>
             </h2>
-            <p className="text-sm leading-relaxed mb-10" style={{ color: "rgba(248,245,238,0.5)", maxWidth: "42ch" }}>
+            <p
+              style={{
+                fontSize: "17px",
+                lineHeight: "1.75",
+                color: "rgba(248,245,238,0.52)",
+                maxWidth: "44ch",
+                marginBottom: "52px",
+              }}
+            >
               Have a project in mind or just want to chat? Drop a message and I'll get back to you directly.
             </p>
 
-            <div className="flex flex-col gap-3">
+            <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
               {meta.map(({ label, val }) => (
                 <div
                   key={label}
-                  className="flex items-center justify-between rounded-2xl px-5 py-4"
-                  style={{ background: "rgba(29,77,58,0.2)", border: "1px solid rgba(255,255,255,0.06)" }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    borderRadius: "16px",
+                    padding: "18px 24px",
+                    background: "rgba(29,77,58,0.18)",
+                    border: "1px solid rgba(255,255,255,0.055)",
+                  }}
                 >
-                  <span className="text-xs font-medium" style={{ color: "rgba(168,240,198,0.55)" }}>{label}</span>
-                  <span className="text-sm font-semibold" style={{ color: "#F8F5EE" }}>{val}</span>
+                  <span style={{ fontSize: "13px", fontWeight: 500, color: "rgba(168,240,198,0.55)" }}>{label}</span>
+                  <span style={{ fontSize: "14px", fontWeight: 600, color: "#F8F5EE" }}>{val}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Form */}
-          <div className="glass-card rounded-3xl p-8 lg:p-10">
+          {/* Right — form */}
+          <div
+            className="glass-card"
+            style={{ borderRadius: "28px", padding: "48px" }}
+          >
             {sent ? (
-              <div className="py-16 flex flex-col items-center gap-4 text-center">
+              <div style={{ padding: "48px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", textAlign: "center" }}>
                 <div
-                  className="w-12 h-12 rounded-full flex items-center justify-center text-lg"
-                  style={{ background: "rgba(168,240,198,0.1)", border: "1px solid rgba(168,240,198,0.25)", color: "#A8F0C6" }}
+                  style={{
+                    width: "52px", height: "52px", borderRadius: "50%",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: "20px",
+                    background: "rgba(168,240,198,0.08)",
+                    border: "1px solid rgba(168,240,198,0.22)",
+                    color: "#A8F0C6",
+                  }}
                 >
                   ✓
                 </div>
-                <p className="font-bold text-base" style={{ color: "#F8F5EE" }}>Message sent!</p>
-                <p className="text-sm" style={{ color: "rgba(248,245,238,0.4)" }}>I'll get back to you within 1–2 days.</p>
+                <p style={{ fontSize: "18px", fontWeight: 700, color: "#F8F5EE", fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Message sent!</p>
+                <p style={{ fontSize: "14px", color: "rgba(248,245,238,0.42)" }}>I'll get back to you within 1–2 days.</p>
               </div>
             ) : (
-              <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="flex flex-col gap-5">
+              <form
+                onSubmit={e => { e.preventDefault(); setSent(true); }}
+                style={{ display: "flex", flexDirection: "column", gap: "24px" }}
+              >
                 {[
                   { id: "name",  label: "Your name",  type: "text",  placeholder: "Aryan" },
                   { id: "email", label: "Email",       type: "email", placeholder: "you@example.com" },
                 ].map(({ id, label, type, placeholder }) => (
-                  <div key={id} className="flex flex-col gap-2">
-                    <label className="text-xs font-medium" style={{ color: "rgba(248,245,238,0.45)" }}>{label}</label>
-                    <input type={type} required placeholder={placeholder} value={form[id]} onChange={set(id)} style={inputStyle} />
+                  <div key={id} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <label style={{ fontSize: "13px", fontWeight: 500, color: "rgba(248,245,238,0.45)" }}>{label}</label>
+                    <input
+                      type={type}
+                      required
+                      placeholder={placeholder}
+                      value={form[id]}
+                      onChange={set(id)}
+                      style={{
+                        width: "100%",
+                        padding: "15px 18px",
+                        fontSize: "15px",
+                        color: "#F8F5EE",
+                        background: "rgba(255,255,255,0.04)",
+                        border: "1px solid rgba(255,255,255,0.09)",
+                        borderRadius: "14px",
+                        outline: "none",
+                        transition: "border-color 0.2s",
+                      }}
+                      onFocus={e => e.target.style.borderColor = "rgba(246,198,103,0.4)"}
+                      onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.09)"}
+                    />
                   </div>
                 ))}
 
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-medium" style={{ color: "rgba(248,245,238,0.45)" }}>Message</label>
+                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                  <label style={{ fontSize: "13px", fontWeight: 500, color: "rgba(248,245,238,0.45)" }}>Message</label>
                   <textarea
                     required
                     rows={5}
                     placeholder="Tell me about your project…"
                     value={form.message}
                     onChange={set("message")}
-                    style={{ ...inputStyle, resize: "none" }}
+                    style={{
+                      width: "100%",
+                      padding: "15px 18px",
+                      fontSize: "15px",
+                      color: "#F8F5EE",
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.09)",
+                      borderRadius: "14px",
+                      outline: "none",
+                      resize: "none",
+                      transition: "border-color 0.2s",
+                    }}
+                    onFocus={e => e.target.style.borderColor = "rgba(246,198,103,0.4)"}
+                    onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.09)"}
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-2xl text-sm font-semibold transition-all hover:opacity-90 hover:scale-[1.01] active:scale-[0.99] mt-1"
-                  style={{ background: "#F6C667", color: "#0F2A1F" }}
+                  style={{
+                    width: "100%",
+                    padding: "16px",
+                    marginTop: "4px",
+                    borderRadius: "14px",
+                    fontSize: "15px",
+                    fontWeight: 600,
+                    background: "#F6C667",
+                    color: "#0F2A1F",
+                    border: "none",
+                    cursor: "pointer",
+                    transition: "opacity 0.2s, transform 0.15s",
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.opacity = "0.9"; e.currentTarget.style.transform = "scale(1.01)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "scale(1)"; }}
                 >
                   Send message
                 </button>

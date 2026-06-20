@@ -8,35 +8,55 @@ const categories = [
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-24">
+    <section id="skills" className="section">
       <div className="container">
 
-        <div className="mb-12">
-          <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#A8F0C6" }}>Expertise</p>
-          <h2
-            className="font-extrabold leading-tight tracking-tight"
-            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "#F8F5EE" }}
-          >
-            Skills &amp; technologies
-          </h2>
+        <div style={{ marginBottom: "64px" }}>
+          <p className="section-label">Expertise</p>
+          <h2 className="section-title">Skills &amp; technologies</h2>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: "24px",
+          }}
+        >
           {categories.map(({ label, color, skills }) => (
-            <div key={label} className="glass-card rounded-3xl p-7 flex flex-col gap-5">
-              <div className="flex items-center gap-2.5">
-                <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: color }} />
-                <h3 className="text-sm font-semibold" style={{ color: "rgba(248,245,238,0.7)" }}>{label}</h3>
+            <div
+              key={label}
+              className="glass-card"
+              style={{ borderRadius: "24px", padding: "36px" }}
+            >
+              {/* Category header */}
+              <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "28px" }}>
+                <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: color, flexShrink: 0 }} />
+                <h3
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: 600,
+                    color: "rgba(248,245,238,0.75)",
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  }}
+                >
+                  {label}
+                </h3>
               </div>
-              <div className="flex flex-wrap gap-2">
+
+              {/* Tags */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
                 {skills.map(s => (
                   <span
                     key={s}
-                    className="text-xs px-3 py-1.5 rounded-full font-medium"
                     style={{
+                      fontSize: "13px",
+                      fontWeight: 500,
+                      padding: "8px 16px",
+                      borderRadius: "99px",
                       background: "rgba(255,255,255,0.05)",
-                      border: `1px solid ${color}20`,
-                      color: "rgba(248,245,238,0.72)",
+                      border: `1px solid ${color}1A`,
+                      color: "rgba(248,245,238,0.75)",
                     }}
                   >
                     {s}

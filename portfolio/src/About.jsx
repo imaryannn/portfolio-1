@@ -5,65 +5,139 @@ const facts = [
   { label: "Status",   val: "Ready to build" },
 ];
 
+const techs = ["React", "Node.js", "MongoDB", "Express", "Socket.io", "WebRTC", "TypeScript", "Next.js"];
+
 export default function About() {
   return (
-    <section id="about" className="py-24">
+    <section id="about" className="section">
       <div className="container">
-        <div className="grid md:grid-cols-2 gap-16 lg:gap-24 items-center">
 
-          {/* Left */}
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: "#A8F0C6" }}>
-              About me
-            </p>
-            <h2
-              className="font-extrabold leading-tight tracking-tight mb-6"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "#F8F5EE" }}
+        {/* Full-width header — sets the section before the two-col layout */}
+        <div style={{ marginBottom: "72px" }}>
+          <p className="section-label">About me</p>
+          <h2 className="section-title" style={{ maxWidth: "18ch" }}>
+            Building reliable<br />
+            <span style={{ color: "#F6C667" }}>products that last.</span>
+          </h2>
+        </div>
+
+        {/* Two columns — 55/45 split gives left more room for text */}
+        <div
+          className="grid items-start"
+          style={{ gridTemplateColumns: "1fr 1fr", gap: "clamp(40px, 6vw, 96px)" }}
+        >
+          {/* Left — prose */}
+          <div style={{ paddingTop: "4px" }}>
+            <p
+              style={{
+                fontSize: "18px",
+                lineHeight: "1.75",
+                color: "rgba(248,245,238,0.82)",
+                marginBottom: "20px",
+                maxWidth: "56ch",
+              }}
             >
-              Building reliable<br />
-              <span style={{ color: "#F6C667" }}>products that last.</span>
-            </h2>
-            <p className="text-base leading-relaxed mb-4" style={{ color: "rgba(248,245,238,0.75)", maxWidth: "52ch" }}>
               I build scalable, distributed, production-grade systems that work under pressure.
             </p>
-            <p className="text-sm leading-relaxed mb-8" style={{ color: "rgba(248,245,238,0.45)", maxWidth: "52ch" }}>
-              Node.js backends, REST APIs, WebSocket servers, MongoDB pipelines, and front-end interfaces that are fast and functional. I don't just make things look good — I make them work.
+            <p
+              style={{
+                fontSize: "16px",
+                lineHeight: "1.8",
+                color: "rgba(248,245,238,0.48)",
+                marginBottom: "48px",
+                maxWidth: "56ch",
+              }}
+            >
+              Node.js backends, REST APIs, WebSocket servers, MongoDB pipelines, and front-end
+              interfaces that are fast and functional. I don't just make things look good —
+              I make them work.
             </p>
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 text-sm font-semibold transition-opacity hover:opacity-70"
-              style={{ color: "#F6C667" }}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                fontSize: "15px",
+                fontWeight: 600,
+                color: "#F6C667",
+                textDecoration: "none",
+                transition: "opacity 0.2s",
+              }}
+              onMouseEnter={e => e.currentTarget.style.opacity = "0.65"}
+              onMouseLeave={e => e.currentTarget.style.opacity = "1"}
             >
               Let's connect →
             </a>
           </div>
 
-          {/* Right */}
-          <div className="glass-card rounded-3xl p-8 lg:p-10">
-            <div className="grid grid-cols-2 gap-4">
+          {/* Right — glass card */}
+          <div
+            className="glass-card"
+            style={{ borderRadius: "28px", padding: "40px" }}
+          >
+            {/* Facts grid */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "32px",
+                marginBottom: "36px",
+              }}
+            >
               {facts.map(({ label, val }) => (
-                <div key={label} className="flex flex-col gap-1.5">
-                  <p className="text-xs font-medium uppercase tracking-widest" style={{ color: "rgba(168,240,198,0.5)" }}>{label}</p>
-                  <p className="text-sm font-semibold leading-snug" style={{ color: "#F8F5EE" }}>{val}</p>
+                <div key={label}>
+                  <p
+                    style={{
+                      fontSize: "11px",
+                      fontWeight: 600,
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      color: "rgba(168,240,198,0.5)",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    {label}
+                  </p>
+                  <p style={{ fontSize: "15px", fontWeight: 600, color: "#F8F5EE", lineHeight: 1.4 }}>
+                    {val}
+                  </p>
                 </div>
               ))}
             </div>
 
-            <div className="mt-8 pt-8" style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}>
-              <p className="text-xs uppercase tracking-widest mb-4 font-medium" style={{ color: "rgba(168,240,198,0.5)" }}>
-                Core technologies
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {["React", "Node.js", "MongoDB", "Express", "Socket.io", "WebRTC", "TypeScript", "Next.js"].map(t => (
-                  <span
-                    key={t}
-                    className="text-xs px-3 py-1.5 rounded-full font-medium"
-                    style={{ background: "rgba(255,255,255,0.06)", color: "rgba(248,245,238,0.7)" }}
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
+            {/* Divider */}
+            <div style={{ height: "1px", background: "rgba(255,255,255,0.07)", marginBottom: "32px" }} />
+
+            {/* Tech tags */}
+            <p
+              style={{
+                fontSize: "11px",
+                fontWeight: 600,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "rgba(168,240,198,0.5)",
+                marginBottom: "16px",
+              }}
+            >
+              Core technologies
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+              {techs.map(t => (
+                <span
+                  key={t}
+                  style={{
+                    fontSize: "13px",
+                    fontWeight: 500,
+                    padding: "7px 14px",
+                    borderRadius: "99px",
+                    background: "rgba(255,255,255,0.06)",
+                    color: "rgba(248,245,238,0.72)",
+                  }}
+                >
+                  {t}
+                </span>
+              ))}
             </div>
           </div>
         </div>

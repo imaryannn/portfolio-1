@@ -1,50 +1,36 @@
 const projects = [
   {
-    category: "Video calling",
-    name: "ZyroMeet",
-    accent: "#7ED7FF",
+    category: "Video calling", name: "ZyroMeet", accent: "#7ED7FF",
     desc: "Browser-based video calling using WebRTC for peer-to-peer media and WebSockets for signaling. Low-latency A/V transport with real-time connection negotiation.",
     stack: ["WebRTC", "WebSocket", "React"],
   },
   {
-    category: "Cloud storage",
-    name: "TelStorage",
-    accent: "#A8F0C6",
+    category: "Cloud storage", name: "TelStorage", accent: "#A8F0C6",
     desc: "Unlimited cloud storage built on Telegram's infrastructure. Google Drive-style interface — upload, organise, search and access files from any device, free forever.",
     stack: ["Next.js", "TypeScript", "Telegram API"],
   },
   {
-    category: "AI platform",
-    name: "Orian",
-    accent: "#FFD95A",
+    category: "AI platform", name: "Orian", accent: "#FFD95A",
     desc: "Goal-driven multi-agent AI. Input a goal — specialised agents autonomously plan, research, reason and deliver completed work without human intervention.",
     stack: ["Node.js", "React", "Groq API", "BullMQ", "Redis", "Socket.io"],
   },
   {
-    category: "Real-time chat",
-    name: "NodeChat",
-    accent: "#F6C667",
+    category: "Real-time chat", name: "NodeChat", accent: "#F6C667",
     desc: "Chat app built on Node.js and Socket.io with bidirectional WebSocket connections, room-based messaging and live user presence on a persistent Express server.",
     stack: ["Express.js", "MongoDB", "Socket.io"],
   },
   {
-    category: "Browser utility",
-    name: "WPDF Toolkit",
-    accent: "#A8F0C6",
+    category: "Browser utility", name: "WPDF Toolkit", accent: "#A8F0C6",
     desc: "Client-side PDF processor using Web Workers to compress, encrypt and manipulate PDF binaries entirely in the browser — no uploads, no server.",
     stack: ["Web Workers", "PDF.js API", "Binary Streams"],
   },
   {
-    category: "Email client",
-    name: "Prioramail",
-    accent: "#7ED7FF",
+    category: "Email client", name: "Prioramail", accent: "#7ED7FF",
     desc: "Minimal email platform with OAuth/JWT authentication, full inbox management and Gmail API integration with a clean, distraction-free UI.",
     stack: ["Express", "MongoDB", "OAuth/JWT", "Gmail API"],
   },
   {
-    category: "Watch together",
-    name: "Syncyt",
-    accent: "#F6C667",
+    category: "Watch together", name: "Syncyt", accent: "#F6C667",
     desc: "Synchronized media platform — watch YouTube videos with friends in real time, with live chat and presence powered by Socket.io.",
     stack: ["Socket.io", "Node.js", "YouTube API"],
   },
@@ -52,63 +38,124 @@ const projects = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-24">
+    <section id="projects" className="section">
       <div className="container">
 
-        {/* Header */}
-        <div className="mb-12">
-          <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#A8F0C6" }}>Work</p>
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-            <h2
-              className="font-extrabold leading-tight tracking-tight"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "#F8F5EE" }}
-            >
-              Featured projects
-            </h2>
-            <p className="text-sm" style={{ color: "rgba(248,245,238,0.4)" }}>
-              {projects.length} projects shipped
-            </p>
+        {/* Header row */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-end",
+            justifyContent: "space-between",
+            marginBottom: "64px",
+            flexWrap: "wrap",
+            gap: "16px",
+          }}
+        >
+          <div>
+            <p className="section-label">Work</p>
+            <h2 className="section-title">Featured projects</h2>
           </div>
+          <p style={{ fontSize: "14px", color: "rgba(248,245,238,0.35)", fontWeight: 500 }}>
+            {projects.length} projects shipped
+          </p>
         </div>
 
-        {/* Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {/* 3-col grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: "28px",
+          }}
+        >
           {projects.map((p) => (
             <div
               key={p.name}
-              className="glass-card rounded-3xl p-7 flex flex-col gap-5 transition-transform duration-300 hover:-translate-y-1"
+              className="glass-card"
+              style={{
+                borderRadius: "24px",
+                padding: "32px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "0",
+                transition: "transform 0.25s ease",
+              }}
+              onMouseEnter={e => e.currentTarget.style.transform = "translateY(-4px)"}
+              onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}
             >
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-medium" style={{ color: "rgba(248,245,238,0.4)" }}>{p.category}</span>
-                <span className="w-2 h-2 rounded-full" style={{ background: p.accent + "99" }} />
+              {/* Top row */}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "24px" }}>
+                <span style={{ fontSize: "12px", fontWeight: 500, color: "rgba(248,245,238,0.38)" }}>
+                  {p.category}
+                </span>
+                <span
+                  style={{
+                    width: "8px", height: "8px", borderRadius: "50%",
+                    background: p.accent,
+                    opacity: 0.6,
+                    flexShrink: 0,
+                  }}
+                />
               </div>
 
-              <div>
-                <h3
-                  className="text-lg font-bold mb-2"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: "#F8F5EE" }}
-                >
-                  {p.name}
-                </h3>
-                <p className="text-sm leading-relaxed" style={{ color: "rgba(248,245,238,0.5)" }}>{p.desc}</p>
-              </div>
+              {/* Title */}
+              <h3
+                style={{
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  fontSize: "22px",
+                  fontWeight: 700,
+                  color: "#F8F5EE",
+                  marginBottom: "14px",
+                  lineHeight: 1.2,
+                }}
+              >
+                {p.name}
+              </h3>
 
-              <div className="flex flex-wrap gap-1.5 mt-auto">
+              {/* Description */}
+              <p
+                style={{
+                  fontSize: "14px",
+                  lineHeight: "1.75",
+                  color: "rgba(248,245,238,0.5)",
+                  marginBottom: "28px",
+                  flexGrow: 1,
+                }}
+              >
+                {p.desc}
+              </p>
+
+              {/* Stack tags */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "24px" }}>
                 {p.stack.map(s => (
                   <span
                     key={s}
-                    className="text-xs px-2.5 py-1 rounded-full"
-                    style={{ background: "rgba(255,255,255,0.05)", color: "rgba(248,245,238,0.55)" }}
+                    style={{
+                      fontSize: "12px",
+                      padding: "5px 12px",
+                      borderRadius: "99px",
+                      background: "rgba(255,255,255,0.05)",
+                      color: "rgba(248,245,238,0.52)",
+                    }}
                   >
                     {s}
                   </span>
                 ))}
               </div>
 
+              {/* Link */}
               <a
                 href="#"
-                className="text-xs font-semibold tracking-wide self-start transition-opacity hover:opacity-60"
-                style={{ color: p.accent }}
+                style={{
+                  fontSize: "13px",
+                  fontWeight: 600,
+                  color: p.accent,
+                  textDecoration: "none",
+                  transition: "opacity 0.2s",
+                }}
+                onMouseEnter={e => e.currentTarget.style.opacity = "0.6"}
+                onMouseLeave={e => e.currentTarget.style.opacity = "1"}
               >
                 View project →
               </a>

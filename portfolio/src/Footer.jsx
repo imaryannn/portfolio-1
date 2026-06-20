@@ -1,15 +1,23 @@
 export default function Footer() {
   return (
-    <footer className="py-12" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-      <div className="container flex flex-col sm:flex-row items-center justify-between gap-6">
+    <footer style={{ borderTop: "1px solid rgba(255,255,255,0.055)", padding: "48px 0" }}>
+      <div
+        className="container"
+        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "24px" }}
+      >
         <p
-          className="font-extrabold text-base tracking-tight"
-          style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: "#F6C667" }}
+          style={{
+            fontFamily: "'Plus Jakarta Sans', sans-serif",
+            fontWeight: 800,
+            fontSize: "17px",
+            color: "#F6C667",
+            letterSpacing: "-0.01em",
+          }}
         >
           Aryan<span style={{ color: "#A8F0C6" }}>.</span>
         </p>
 
-        <div className="flex gap-7">
+        <div style={{ display: "flex", gap: "36px" }}>
           {[
             { label: "GitHub",   href: "https://github.com" },
             { label: "LinkedIn", href: "https://linkedin.com" },
@@ -19,17 +27,16 @@ export default function Footer() {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-medium transition-colors duration-200"
-              style={{ color: "rgba(248,245,238,0.4)" }}
-              onMouseEnter={e => e.target.style.color = "#F8F5EE"}
-              onMouseLeave={e => e.target.style.color = "rgba(248,245,238,0.4)"}
+              style={{ fontSize: "14px", fontWeight: 500, color: "rgba(248,245,238,0.38)", textDecoration: "none", transition: "color 0.2s" }}
+              onMouseEnter={e => e.currentTarget.style.color = "#F8F5EE"}
+              onMouseLeave={e => e.currentTarget.style.color = "rgba(248,245,238,0.38)"}
             >
               {label}
             </a>
           ))}
         </div>
 
-        <p className="text-xs" style={{ color: "rgba(248,245,238,0.22)" }}>
+        <p style={{ fontSize: "13px", color: "rgba(248,245,238,0.22)" }}>
           © {new Date().getFullYear()} Aryan. All rights reserved.
         </p>
       </div>

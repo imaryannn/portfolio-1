@@ -9,83 +9,105 @@ const links = [
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen]         = useState(false);
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 50);
+    const fn = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
   return (
     <nav
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        scrolled ? "glass-dark py-3 shadow-lg shadow-black/20" : "py-5"
-      }`}
+      style={{
+        position: "fixed",
+        top: "20px",
+        left: "50%",
+        transform: "translateX(-50%)",
+        zIndex: 50,
+        width: "fit-content",
+        transition: "all 0.5s ease",
+      }}
     >
-      <div className="container flex items-center justify-between">
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          padding: "8px 8px 8px 24px",
+          borderRadius: "99px",
+          transition: "all 0.5s ease",
+          background: scrolled ? "rgba(255,255,255,0.05)" : "transparent",
+          backdropFilter: scrolled ? "blur(32px) saturate(180%)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(32px) saturate(180%)" : "none",
+          border: scrolled ? "1px solid rgba(255,255,255,0.1)" : "1px solid transparent",
+          boxShadow: scrolled ? "0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(0,0,0,0.08)" : "none",
+        }}
+      >
+        {/* Logo */}
         <a
           href="#home"
-          className="text-base font-extrabold tracking-tight"
-          style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: "#F6C667" }}
+          style={{
+            fontFamily: "'Plus Jakarta Sans', sans-serif",
+            fontWeight: 800,
+            fontSize: "16px",
+            color: "#F6C667",
+            textDecoration: "none",
+            letterSpacing: "-0.01em",
+            marginRight: "8px",
+          }}
         >
           Aryan<span style={{ color: "#A8F0C6" }}>.</span>
         </a>
 
-        {/* Desktop */}
-        <ul className="hidden md:flex items-center gap-7">
+        {/* Divider */}
+        <div style={{ width: "1px", height: "18px", background: "rgba(255,255,255,0.15)", marginRight: "8px" }} />
+
+        {/* Desktop links */}
+        <ul style={{ display: "flex", alignItems: "center", gap: "4px", listStyle: "none", margin: 0, padding: 0 }}>
           {links.map(({ label, href }) => (
             <li key={label}>
               <a
                 href={href}
-                className="text-sm font-medium transition-colors duration-200"
-                style={{ color: "rgba(248,245,238,0.6)" }}
-                onMouseEnter={e => e.target.style.color = "#F8F5EE"}
-                onMouseLeave={e => e.target.style.color = "rgba(248,245,238,0.6)"}
+                style={{
+                  fontSize: "14px",
+                  fontWeight: 500,
+                  color: "rgba(248,245,238,0.65)",
+                  textDecoration: "none",
+                  padding: "7px 14px",
+                  borderRadius: "99px",
+                  transition: "background 0.2s, color 0.2s",
+                  display: "block",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.color = "#F8F5EE"; e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
+                onMouseLeave={e => { e.currentTarget.style.color = "rgba(248,245,238,0.65)"; e.currentTarget.style.background = "transparent"; }}
               >
                 {label}
               </a>
             </li>
           ))}
-          <li>
+          <li style={{ marginLeft: "8px" }}>
             <a
               href="#contact"
-              className="px-5 py-2 rounded-full text-sm font-semibold transition-opacity hover:opacity-85"
-              style={{ background: "#F6C667", color: "#0F2A1F" }}
+              style={{
+                padding: "9px 20px",
+                borderRadius: "99px",
+                fontSize: "14px",
+                fontWeight: 600,
+                background: "#F6C667",
+                color: "#0F2A1F",
+                textDecoration: "none",
+                transition: "opacity 0.2s",
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                boxShadow: "0 2px 8px rgba(246,198,103,0.3)",
+              }}
+              onMouseEnter={e => e.currentTarget.style.opacity = "0.88"}
+              onMouseLeave={e => e.currentTarget.style.opacity = "1"}
             >
               Hire me
             </a>
           </li>
         </ul>
-
-        {/* Mobile burger */}
-        <button
-          className="md:hidden flex flex-col justify-center gap-[5px] w-8 h-8"
-          onClick={() => setOpen(o => !o)}
-          aria-label="Toggle menu"
-        >
-          <span className={`block h-px bg-[#F8F5EE] transition-all duration-300 ${open ? "rotate-45 translate-y-[6px]" : ""}`} />
-          <span className={`block h-px bg-[#F8F5EE] transition-all duration-300 ${open ? "opacity-0" : ""}`} />
-          <span className={`block h-px bg-[#F8F5EE] transition-all duration-300 ${open ? "-rotate-45 -translate-y-[6px]" : ""}`} />
-        </button>
       </div>
-
-      {/* Mobile menu */}
-      {open && (
-        <div className="glass-dark md:hidden mt-2 mx-4 rounded-2xl px-6 py-5 flex flex-col gap-5">
-          {links.map(({ label, href }) => (
-            <a
-              key={label}
-              href={href}
-              className="text-base font-medium"
-              style={{ color: "rgba(248,245,238,0.8)" }}
-              onClick={() => setOpen(false)}
-            >
-              {label}
-            </a>
-          ))}
-        </div>
-      )}
     </nav>
   );
 }

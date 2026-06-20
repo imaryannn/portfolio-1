@@ -1,9 +1,9 @@
 import { useRef, useEffect } from "react";
 
 export default function HeroSection() {
-  const videoRef   = useRef(null);
-  const rafRef     = useRef(null);
-  const targetTime = useRef(0);
+  const videoRef    = useRef(null);
+  const rafRef      = useRef(null);
+  const targetTime  = useRef(0);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -30,106 +30,129 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative w-screen h-screen overflow-hidden"
       onMouseMove={handleMouseMove}
+      style={{ position: "relative", width: "100vw", height: "100vh", overflow: "hidden" }}
     >
+      {/* Video */}
       <video
         ref={videoRef}
         src="/hero.mp4"
         muted
         playsInline
         preload="auto"
-        className="absolute inset-0 w-full h-full object-cover"
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
       />
 
-      {/* Left fade — covers only left ~40% so creature in center/right stays visible */}
-      <div
-        className="absolute inset-0"
-        style={{ background: "linear-gradient(to right, rgba(15,42,31,0.97) 0%, rgba(15,42,31,0.85) 25%, rgba(15,42,31,0.2) 50%, transparent 65%)" }}
-      />
-      {/* Bottom fade into next section */}
-      <div
-        className="absolute inset-0"
-        style={{ background: "linear-gradient(to top, #0F2A1F 0%, transparent 30%)" }}
-      />
-      {/* Top fade for nav readability */}
-      <div
-        className="absolute inset-0"
-        style={{ background: "linear-gradient(to bottom, rgba(15,42,31,0.4) 0%, transparent 20%)" }}
-      />
+      {/* Gradient overlays — dark on left and bottom, clear on right for creature */}
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(15,42,31,0.97) 0%, rgba(15,42,31,0.7) 30%, rgba(15,42,31,0.1) 55%, transparent 70%)" }} />
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, #0F2A1F 0%, transparent 25%)" }} />
 
-      {/* Content — left third, vertically centered, creature in center stays clear */}
+      {/* Content */}
       <div
-        className="absolute inset-0 flex flex-col justify-center"
-        style={{ paddingInline: "clamp(24px, 5vw, 80px)", maxWidth: "520px" }}
+        style={{
+          position: "absolute",
+          inset: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingInline: "clamp(24px, 5vw, 96px)",
+        }}
       >
-        {/* Status pill */}
-        <div className="glass inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full w-fit mb-6">
-          <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#A8F0C6" }} />
-          <span className="text-xs font-medium" style={{ color: "#A8F0C6" }}>Available for work</span>
+        {/* Left — badge + name + subtitle */}
+        <div style={{ display: "flex", flexDirection: "column", maxWidth: "380px" }}>
+          <h1
+            style={{
+              fontFamily: "'Bitcount Grid Double', monospace",
+              fontSize: "clamp(4rem, 9vw, 9rem)",
+              fontWeight: 800,
+              lineHeight: 0.95,
+              textTransform: "uppercase",
+              marginBottom: "20px",
+              color: "#F8F5EE",
+            }}
+          >
+            Hi, I'm<br /><span style={{ color: "#F6C667" }}>Aryan</span>
+          </h1>
+
+          <p
+            style={{
+              fontSize: "15px",
+              lineHeight: 1.75,
+              color: "rgba(248,245,238,0.6)",
+            }}
+          >
+            Full stack developer building high-performance systems and
+            immersive web experiences — from backend APIs to polished UIs.
+          </p>
         </div>
 
-        {/* Name — constrained to left half so it never overlaps the creature */}
-        <h1
-          className="font-extrabold tracking-tight leading-[1.05] mb-5"
-          style={{
-            fontFamily: "'Plus Jakarta Sans', sans-serif",
-            fontSize: "clamp(2.8rem, 6vw, 6rem)",
-            color: "#F8F5EE",
-            maxWidth: "10ch",
-          }}
-        >
-          Hi, I'm{" "}
-          <span style={{ color: "#F6C667" }}>Aryan</span>
-        </h1>
-
-        {/* Subtitle */}
-        <p
-          className="text-sm leading-relaxed mb-8"
-          style={{ color: "rgba(248,245,238,0.6)", maxWidth: "40ch" }}
-        >
-          Full stack developer building high-performance systems and
-          immersive web experiences — from backend APIs to polished UIs.
-        </p>
-
-        {/* CTAs */}
-        <div className="flex flex-wrap gap-3 mb-10">
-          <a
-            href="#projects"
-            className="px-6 py-2.5 rounded-full text-sm font-semibold transition-all hover:opacity-90 hover:scale-105 active:scale-95"
-            style={{ background: "#F6C667", color: "#0F2A1F" }}
-          >
-            View projects
-          </a>
-          <a
-            href="#contact"
-            className="glass px-6 py-2.5 rounded-full text-sm font-semibold transition-all hover:scale-105 active:scale-95"
-            style={{ color: "#F8F5EE" }}
-          >
-            Get in touch
-          </a>
-        </div>
-
-        {/* Stats */}
-        <div className="flex flex-wrap gap-8">
+        {/* Right — project stats */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "28px", maxWidth: "220px" }}>
           {[
-            { val: "5+",         label: "Projects shipped" },
-            { val: "Full stack", label: "Specialisation" },
-            { val: "Open",       label: "To new work" },
-          ].map(({ val, label }) => (
-            <div key={label}>
-              <p className="text-lg font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: "#FFD95A" }}>{val}</p>
-              <p className="text-xs mt-0.5" style={{ color: "rgba(248,245,238,0.4)" }}>{label}</p>
+            { val: "5+",      label: "Projects shipped",  accent: "#FFD95A" },
+            { val: "Full stack", label: "Specialisation",  accent: "#A8F0C6" },
+            { val: "Open",    label: "To new work",        accent: "#F6C667" },
+          ].map(({ val, label, accent }) => (
+            <div key={label} style={{ borderLeft: `2px solid ${accent}44`, paddingLeft: "16px" }}>
+              <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "20px", fontWeight: 700, color: accent, lineHeight: 1 }}>{val}</p>
+              <p style={{ fontSize: "12px", color: "rgba(248,245,238,0.45)", marginTop: "5px" }}>{label}</p>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Scroll cue */}
-      <div className="absolute bottom-6 right-10 flex flex-col items-center gap-2 opacity-35">
-        <span className="text-xs tracking-widest" style={{ color: "#F8F5EE", writingMode: "vertical-rl" }}>scroll</span>
-        <div className="w-px h-8" style={{ background: "linear-gradient(to bottom, #F6C667, transparent)" }} />
+      {/* Bottom center — CTAs */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: "48px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: "flex",
+          gap: "12px",
+        }}
+      >
+        <a
+          href="#projects"
+          style={{
+            padding: "12px 28px",
+            borderRadius: "99px",
+            fontSize: "14px",
+            fontWeight: 600,
+            background: "#F6C667",
+            color: "#0F2A1F",
+            textDecoration: "none",
+            fontFamily: "'Plus Jakarta Sans', sans-serif",
+            transition: "opacity 0.2s",
+          }}
+          onMouseEnter={e => e.currentTarget.style.opacity = "0.88"}
+          onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+        >
+          View projects
+        </a>
+        <a
+          href="#contact"
+          style={{
+            padding: "12px 28px",
+            borderRadius: "99px",
+            fontSize: "14px",
+            fontWeight: 600,
+            color: "#F8F5EE",
+            textDecoration: "none",
+            background: "rgba(255,244,214,0.07)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+            border: "1px solid rgba(246,198,103,0.18)",
+            transition: "opacity 0.2s",
+          }}
+          onMouseEnter={e => e.currentTarget.style.opacity = "0.75"}
+          onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+        >
+          Get in touch
+        </a>
       </div>
+
+
     </section>
   );
 }
