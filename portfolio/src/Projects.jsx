@@ -1,48 +1,69 @@
-const projects = [
+import { useEffect, useState } from "react";
+import FadeIn from "./FadeIn";
+import { fetchProjects } from "./api";
+
+const FALLBACK = [
   {
     category: "Video calling", name: "ZyroMeet", accent: "#7ED7FF",
     desc: "Browser-based video calling using WebRTC for peer-to-peer media and WebSockets for signaling. Low-latency A/V transport with real-time connection negotiation.",
-    stack: ["WebRTC", "WebSocket", "React"],
+    stack: ["WebRTC", "WebSocket", "React"], link: "#",
   },
   {
     category: "Cloud storage", name: "TelStorage", accent: "#A8F0C6",
     desc: "Unlimited cloud storage built on Telegram's infrastructure. Google Drive-style interface — upload, organise, search and access files from any device, free forever.",
-    stack: ["Next.js", "TypeScript", "Telegram API"],
+    stack: ["Next.js", "TypeScript", "Telegram API"], link: "#",
   },
   {
     category: "AI platform", name: "Orian", accent: "#FFD95A",
     desc: "Goal-driven multi-agent AI. Input a goal — specialised agents autonomously plan, research, reason and deliver completed work without human intervention.",
-    stack: ["Node.js", "React", "Groq API", "BullMQ", "Redis", "Socket.io"],
+    stack: ["Node.js", "React", "Groq API", "BullMQ", "Redis", "Socket.io"], link: "#",
   },
   {
     category: "Real-time chat", name: "NodeChat", accent: "#F6C667",
     desc: "Chat app built on Node.js and Socket.io with bidirectional WebSocket connections, room-based messaging and live user presence on a persistent Express server.",
-    stack: ["Express.js", "MongoDB", "Socket.io"],
+    stack: ["Express.js", "MongoDB", "Socket.io"], link: "#",
   },
   {
     category: "Browser utility", name: "WPDF Toolkit", accent: "#A8F0C6",
     desc: "Client-side PDF processor using Web Workers to compress, encrypt and manipulate PDF binaries entirely in the browser — no uploads, no server.",
-    stack: ["Web Workers", "PDF.js API", "Binary Streams"],
+    stack: ["Web Workers", "PDF.js API", "Binary Streams"], link: "#",
   },
   {
     category: "Email client", name: "Prioramail", accent: "#7ED7FF",
     desc: "Minimal email platform with OAuth/JWT authentication, full inbox management and Gmail API integration with a clean, distraction-free UI.",
-    stack: ["Express", "MongoDB", "OAuth/JWT", "Gmail API"],
+    stack: ["Express", "MongoDB", "OAuth/JWT", "Gmail API"], link: "#",
   },
   {
     category: "Watch together", name: "Syncyt", accent: "#F6C667",
     desc: "Synchronized media platform — watch YouTube videos with friends in real time, with live chat and presence powered by Socket.io.",
-    stack: ["Socket.io", "Node.js", "YouTube API"],
+    stack: ["Socket.io", "Node.js", "YouTube API"], link: "#",
   },
 ];
 
+const ACCENTS = ["#7ED7FF", "#A8F0C6", "#FFD95A", "#F6C667", "#A8F0C6", "#7ED7FF", "#F6C667"];
+
 export default function Projects() {
+  const [projects, setProjects] = useState(FALLBACK);
+
+  useEffect(() => {
+    fetchProjects().then(data => {
+      if (data.length > 0) {
+        setProjects(data.map((p, i) => ({
+          category: p.category,
+          name: p.name,
+          desc: p.description,
+          stack: p.techStack || [],
+          link: p.link || "#",
+          accent: ACCENTS[i % ACCENTS.length],
+        })));
+      }
+    }).catch(() => {});
+  }, []);
   return (
     <section id="projects" className="section">
       <div className="container">
 
-        {/* Header row */}
-        <div
+        <FadeIn
           style={{
             display: "flex",
             alignItems: "flex-end",
@@ -59,9 +80,8 @@ export default function Projects() {
           <p style={{ fontSize: "14px", color: "rgba(248,245,238,0.35)", fontWeight: 500 }}>
             {projects.length} projects shipped
           </p>
-        </div>
+        </FadeIn>
 
-        {/* 3-col grid */}
         <div
           style={{
             display: "grid",
@@ -69,97 +89,94 @@ export default function Projects() {
             gap: "28px",
           }}
         >
-          {projects.map((p) => (
-            <div
-              key={p.name}
-              className="glass-card"
-              style={{
-                borderRadius: "24px",
-                padding: "32px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "0",
-                transition: "transform 0.25s ease",
-              }}
-              onMouseEnter={e => e.currentTarget.style.transform = "translateY(-4px)"}
-              onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}
-            >
-              {/* Top row */}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "24px" }}>
-                <span style={{ fontSize: "12px", fontWeight: 500, color: "rgba(248,245,238,0.38)" }}>
-                  {p.category}
-                </span>
-                <span
-                  style={{
-                    width: "8px", height: "8px", borderRadius: "50%",
-                    background: p.accent,
-                    opacity: 0.6,
-                    flexShrink: 0,
-                  }}
-                />
-              </div>
-
-              {/* Title */}
-              <h3
+          {projects.map((p, i) => (
+            <FadeIn key={p.name} delay={i * 80} from="bottom">
+              <div
+                className="glass-card"
                 style={{
-                  fontFamily: "'Plus Jakarta Sans', sans-serif",
-                  fontSize: "22px",
-                  fontWeight: 700,
-                  color: "#F8F5EE",
-                  marginBottom: "14px",
-                  lineHeight: 1.2,
+                  borderRadius: "24px",
+                  padding: "32px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0",
+                  transition: "transform 0.25s ease",
+                  height: "100%",
                 }}
+                onMouseEnter={e => e.currentTarget.style.transform = "translateY(-4px)"}
+                onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}
               >
-                {p.name}
-              </h3>
-
-              {/* Description */}
-              <p
-                style={{
-                  fontSize: "14px",
-                  lineHeight: "1.75",
-                  color: "rgba(248,245,238,0.5)",
-                  marginBottom: "28px",
-                  flexGrow: 1,
-                }}
-              >
-                {p.desc}
-              </p>
-
-              {/* Stack tags */}
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "24px" }}>
-                {p.stack.map(s => (
-                  <span
-                    key={s}
-                    style={{
-                      fontSize: "12px",
-                      padding: "5px 12px",
-                      borderRadius: "99px",
-                      background: "rgba(255,255,255,0.05)",
-                      color: "rgba(248,245,238,0.52)",
-                    }}
-                  >
-                    {s}
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "24px" }}>
+                  <span style={{ fontSize: "12px", fontWeight: 500, color: "rgba(248,245,238,0.38)" }}>
+                    {p.category}
                   </span>
-                ))}
-              </div>
+                  <span
+                    style={{
+                      width: "8px", height: "8px", borderRadius: "50%",
+                      background: p.accent,
+                      opacity: 0.6,
+                      flexShrink: 0,
+                    }}
+                  />
+                </div>
 
-              {/* Link */}
-              <a
-                href="#"
-                style={{
-                  fontSize: "13px",
-                  fontWeight: 600,
-                  color: p.accent,
-                  textDecoration: "none",
-                  transition: "opacity 0.2s",
-                }}
-                onMouseEnter={e => e.currentTarget.style.opacity = "0.6"}
-                onMouseLeave={e => e.currentTarget.style.opacity = "1"}
-              >
-                View project →
-              </a>
-            </div>
+                <h3
+                  style={{
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                    fontSize: "22px",
+                    fontWeight: 700,
+                    color: "#F8F5EE",
+                    marginBottom: "14px",
+                    lineHeight: 1.2,
+                  }}
+                >
+                  {p.name}
+                </h3>
+
+                <p
+                  style={{
+                    fontSize: "14px",
+                    lineHeight: "1.75",
+                    color: "rgba(248,245,238,0.5)",
+                    marginBottom: "28px",
+                    flexGrow: 1,
+                  }}
+                >
+                  {p.desc}
+                </p>
+
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "24px" }}>
+                  {p.stack.map(s => (
+                    <span
+                      key={s}
+                      style={{
+                        fontSize: "12px",
+                        padding: "5px 12px",
+                        borderRadius: "99px",
+                        background: "rgba(255,255,255,0.05)",
+                        color: "rgba(248,245,238,0.52)",
+                      }}
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+
+                <a
+                  href="#"
+                  style={{
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    color: p.accent,
+                    textDecoration: "none",
+                    transition: "opacity 0.2s",
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.opacity = "0.6"}
+                  onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+                >
+                  View project →
+                </a>
+              </div>
+            </FadeIn>
           ))}
         </div>
       </div>

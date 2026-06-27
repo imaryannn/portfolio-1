@@ -1,6 +1,7 @@
 import "./index.css";
-import { useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import Nav from "./Nav";
+import PageBackground from "./PageBackground";
 import HeroSection from "./HeroSection";
 import About from "./About";
 import Projects from "./Projects";
@@ -9,50 +10,63 @@ import Contact from "./Contact";
 import Footer from "./Footer";
 
 export default function App() {
-  const [bgOpacity, setBgOpacity] = useState(0);
+  const videoRef = useRef(null);
+  const rafRef = useRef(null);
+  const targetTime = useRef(0);
+  const [scrollDark, setScrollDark] = useState(0);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const onLoaded = () => {
+      video.pause();
+      video.currentTime = video.duration / 2;
+    };
+    video.addEventListener("loadedmetadata", onLoaded);
+    return () => video.removeEventListener("loadedmetadata", onLoaded);
+  }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const video = videoRef.current;
+      if (!video || !video.duration) return;
+      targetTime.current = (1 - e.clientX / window.innerWidth) * video.duration;
+      if (rafRef.current) return;
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = null;
+        const v = videoRef.current;
+        if (!v) return;
+        if (v.fastSeek) v.fastSeek(targetTime.current);
+        else v.currentTime = targetTime.current;
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
       const heroHeight = window.innerHeight;
-      // Start fading at 80% through hero, fully visible by 100%
-      const progress = Math.min(Math.max((window.scrollY - heroHeight * 0.8) / (heroHeight * 0.2), 0), 1);
-      setBgOpacity(progress);
+      const progress = Math.min(Math.max(window.scrollY / (heroHeight * 0.85), 0), 1);
+      setScrollDark(progress);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <>
-      <Nav />
-      <HeroSection />
-
-      <div
-        className="relative"
-        style={{
-          backgroundImage: "url('/bg.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center top",
-          backgroundAttachment: "fixed",
-        }}
-      >
-        {/* Dark overlay — thins out as hero scrolls away, revealing the bg image */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: "rgba(15,42,31,1)", opacity: 1 - bgOpacity * 0.35, transition: "opacity 0.05s linear" }}
-        />
-        {/* Green tint overlay — always on top to mute the image */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: "rgba(15,42,31,0.55)", backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)" }}
-        />
-        <div className="relative">
-          <About />
-          <Projects />
-          <Skills />
-          <Contact />
-          <Footer />
-        </div>
+      <PageBackground videoRef={videoRef} scrollDark={scrollDark} />
+      <div className="page-content">
+        <Nav />
+        <HeroSection />
+        <About />
+        <Projects />
+        <Skills />
+        <Contact />
+        <Footer />
       </div>
     </>
   );

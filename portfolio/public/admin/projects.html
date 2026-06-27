@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECTS — ADMIN</title>
+    <link rel="stylesheet" href="/admin-base.css">
+    <link rel="stylesheet" href="admin-style.css">
+    <script src="/config.js"></script>
+
+</head>
+<body>
+    <div class="global-grid"></div>
+    
+    <nav id="admin-nav">
+        <a href="/admin/dashboard.html" class="nav-logo">ADMIN<span>_CORE</span></a>
+        <div class="nav-links">
+            <a href="/admin/dashboard.html" class="nav-link">Dashboard</a>
+            <a href="/admin/projects.html" class="nav-link active">Projects</a>
+            <a href="/admin/skills.html" class="nav-link">Skills</a>
+            <a href="/admin/profile.html" class="nav-link">Profile</a>
+            <a href="/" class="nav-link">View Site</a>
+            <button id="logoutBtn" class="btn btn-outline" style="padding: 0.5rem 1rem;">Logout</button>
+        </div>
+    </nav>
+
+    <main class="admin-main">
+        <div class="container">
+            <div class="section-label">Manage.Projects</div>
+            <h1 class="section-heading">Projects</h1>
+
+            <div class="admin-content">
+                <div class="form-container">
+                    <h2 style="font-family: var(--font-mono); color: var(--accent-cyan); margin-bottom: 1.5rem;" id="formTitle">ADD_PROJECT</h2>
+                    <div class="form-field" style="margin-bottom: 1.5rem;">
+                        <label>AI Prompt:</label>
+                        <textarea id="aiPrompt" placeholder="Describe the project in plain English and let Gemini draft the fields..." style="min-height: 110px;"></textarea>
+                        <div style="display: flex; gap: 1rem; margin-top: 0.75rem; flex-wrap: wrap;">
+                            <button type="button" class="btn btn-outline" id="generateBtn">Generate Draft</button>
+                            <button type="button" class="btn btn-outline" id="usePromptBtn">Fill From Prompt</button>
+                        </div>
+                        <div id="aiMsg" style="margin-top: 0.75rem; font-family: var(--font-mono);"></div>
+                    </div>
+                    <div class="form-field" id="draftPanel" style="margin-bottom: 1.5rem; display: none;">
+                        <label>Draft Review:</label>
+                        <div id="draftPreview" style="border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 1rem; background: rgba(255,255,255,0.03); font-family: var(--font-mono);"></div>
+                        <div style="display: flex; gap: 1rem; margin-top: 0.75rem; flex-wrap: wrap;">
+                            <button type="button" class="btn btn-primary" id="approveDraftBtn" disabled>Approve & Fill</button>
+                            <button type="button" class="btn btn-outline" id="clearDraftBtn">Reject Draft</button>
+                        </div>
+                    </div>
+                    <form id="projectForm">
+                        <input type="hidden" id="projectId" name="id">
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label>Project Name:</label>
+                                <input type="text" id="projectName" name="name" required>
+                            </div>
+                            <div class="form-field">
+                                <label>Category:</label>
+                                <input type="text" id="projectCategory" name="category" placeholder="Protocol: Type" required>
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <label>Description:</label>
+                            <textarea id="projectDescription" name="description" required></textarea>
+                        </div>
+                        <div class="form-field">
+                            <label>Technologies (comma separated):</label>
+                            <input type="text" id="projectTech" name="tech" placeholder="React, Node.js, MongoDB" required>
+                        </div>
+                        <div class="form-field">
+                            <label>Project URL:</label>
+                            <input type="url" id="projectUrl" name="url" required>
+                        </div>
+                        <div style="display: flex; gap: 1rem;">
+                            <button type="submit" class="btn btn-primary" id="submitBtn">Create Project</button>
+                            <button type="button" class="btn btn-outline" id="cancelBtn" style="display: none;">Cancel</button>
+                        </div>
+                        <div id="formMsg" style="margin-top: 1rem; font-family: var(--font-mono);"></div>
+                    </form>
+                </div>
+                
+                <h2 style="font-family: var(--font-mono); color: var(--accent-cyan); margin: 2rem 0 1.5rem;">EXISTING_PROJECTS</h2>
+                <div class="projects-list" id="projectsList">
+                    <p style="color: var(--text-muted);">Loading projects...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="admin.js"></script>
+    <script>
+        let editMode = false;
+        let latestDraft = null;
+        
+        
+        document.getElementById('cancelBtn').addEventListener('click', () => {
+            resetForm();
+        });
+        
+        function resetForm() {
+            editMode = false;
+            document.getElementById('projectForm').reset();
+            document.getElementById('projectId').value = '';
+            document.getElementById('formTitle').textContent = 'ADD_PROJECT';
+            document.getElementById('submitBtn').textContent = 'Create Project';
+            document.getElementById('cancelBtn').style.display = 'none';
+            document.getElementById('formMsg').textContent = '';
+            clearDraft();
+        }
+
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function renderDraft(draft) {
+            latestDraft = draft;
+            document.getElementById('draftPanel').style.display = 'block';
+            document.getElementById('approveDraftBtn').disabled = false;
+            document.getElementById('draftPreview').innerHTML = `
+                <div style="display: grid; gap: 0.75rem;">
+                    <div><span style="color: var(--accent-cyan);">name:</span> ${escapeHtml(draft.name || '<empty>')}</div>
+                    <div><span style="color: var(--accent-cyan);">category:</span> ${escapeHtml(draft.category || 'Protocol: App')}</div>
+                    <div><span style="color: var(--accent-cyan);">description:</span> ${escapeHtml(draft.description || '<empty>')}</div>
+                    <div><span style="color: var(--accent-cyan);">techStack:</span> ${escapeHtml((draft.techStack || []).join(', ') || '<empty>')}</div>
+                    <div><span style="color: var(--accent-cyan);">link:</span> ${escapeHtml(draft.link || '<empty>')}</div>
+                    <div><span style="color: var(--accent-cyan);">order:</span> ${escapeHtml(Number.isFinite(draft.order) ? draft.order : 0)}</div>
+                </div>
+            `;
+            document.getElementById('aiMsg').textContent = '✓ Draft ready. Review it, then approve to fill the form.';
+            document.getElementById('aiMsg').style.color = '#27c93f';
+            if (!editMode) {
+                document.getElementById('formTitle').textContent = 'REVIEW_DRAFT';
+                document.getElementById('submitBtn').textContent = 'Create Project';
+            }
+        }
+
+        function fillFormFromDraft() {
+            if (!latestDraft) return;
+            document.getElementById('projectName').value = latestDraft.name || '';
+            document.getElementById('projectCategory').value = latestDraft.category || 'Protocol: App';
+            document.getElementById('projectDescription').value = latestDraft.description || '';
+            document.getElementById('projectTech').value = (latestDraft.techStack || []).join(', ');
+            document.getElementById('projectUrl').value = latestDraft.link || '';
+            document.getElementById('aiMsg').textContent = '✓ Draft approved and copied into the form. Save when ready.';
+            document.getElementById('aiMsg').style.color = '#27c93f';
+            document.getElementById('draftPanel').style.display = 'none';
+            document.getElementById('approveDraftBtn').disabled = true;
+        }
+
+        function clearDraft() {
+            latestDraft = null;
+            document.getElementById('draftPanel').style.display = 'none';
+            document.getElementById('draftPreview').innerHTML = '';
+            document.getElementById('approveDraftBtn').disabled = true;
+        }
+        
+        function editProject(id, name, category, description, tech, url) {
+            editMode = true;
+            clearDraft();
+            document.getElementById('projectId').value = id;
+            document.getElementById('projectName').value = name;
+            document.getElementById('projectCategory').value = category;
+            document.getElementById('projectDescription').value = description;
+            document.getElementById('projectTech').value = tech.join(', ');
+            document.getElementById('projectUrl').value = url;
+            document.getElementById('formTitle').textContent = 'EDIT_PROJECT';
+            document.getElementById('submitBtn').textContent = 'Update Project';
+            document.getElementById('cancelBtn').style.display = 'inline-block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.getElementById('generateBtn').addEventListener('click', async () => {
+            const prompt = document.getElementById('aiPrompt').value.trim();
+            const aiMsg = document.getElementById('aiMsg');
+
+            if (!prompt) {
+                aiMsg.textContent = 'Enter a project description first.';
+                aiMsg.style.color = 'var(--accent-red)';
+                return;
+            }
+
+            aiMsg.textContent = 'Generating draft...';
+            aiMsg.style.color = 'var(--text-muted)';
+            document.getElementById('generateBtn').disabled = true;
+            document.getElementById('usePromptBtn').disabled = true;
+
+            try {
+                const token = localStorage.getItem('adminToken');
+                const res = await fetch(`${API_BASE_URL}/api/ai/project-draft`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ prompt })
+                });
+
+                const data = await res.json();
+                if (!res.ok) {
+                    throw new Error(data.error || 'Failed to generate draft');
+                }
+
+                renderDraft(data.draft);
+            } catch (error) {
+                aiMsg.textContent = `✗ ${error.message}`;
+                aiMsg.style.color = 'var(--accent-red)';
+            } finally {
+                document.getElementById('generateBtn').disabled = false;
+                document.getElementById('usePromptBtn').disabled = false;
+            }
+        });
+
+        document.getElementById('usePromptBtn').addEventListener('click', () => {
+            const prompt = document.getElementById('aiPrompt').value.trim();
+            if (!prompt) return;
+
+            document.getElementById('projectName').value = prompt;
+            document.getElementById('projectCategory').value = 'Protocol: App';
+            document.getElementById('projectDescription').value = prompt;
+            document.getElementById('projectTech').value = '';
+            document.getElementById('projectUrl').value = '';
+            document.getElementById('aiMsg').textContent = '✓ Prompt copied into the form exactly as written.';
+            document.getElementById('aiMsg').style.color = '#27c93f';
+            clearDraft();
+        });
+
+        document.getElementById('approveDraftBtn').addEventListener('click', () => {
+            fillFormFromDraft();
+        });
+
+        document.getElementById('clearDraftBtn').addEventListener('click', () => {
+            clearDraft();
+            document.getElementById('aiMsg').textContent = 'Draft rejected. Generate a new one or fill manually.';
+            document.getElementById('aiMsg').style.color = 'var(--text-muted)';
+        });
+        
+        
+        document.getElementById('projectForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = {
+                name: formData.get('name'),
+                category: formData.get('category'),
+                description: formData.get('description'),
+                techStack: formData.get('tech').split(',').map(t => t.trim()),
+                link: formData.get('url')
+            };
+            
+            try {
+                const token = localStorage.getItem('adminToken');
+                const id = document.getElementById('projectId').value;
+                const url = editMode ? `${API_BASE_URL}/api/projects/${id}` : `${API_BASE_URL}/api/projects`;
+                const method = editMode ? 'PUT' : 'POST';
+                
+                const res = await fetch(url, {
+                    method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (res.ok) {
+                    document.getElementById('formMsg').textContent = editMode ? '✓ Project updated!' : '✓ Project created!';
+                    document.getElementById('formMsg').style.color = '#27c93f';
+                    resetForm();
+                    loadProjects();
+                } else {
+                    throw new Error('Failed');
+                }
+            } catch (error) {
+                document.getElementById('formMsg').textContent = '✗ Error saving project';
+                document.getElementById('formMsg').style.color = 'var(--accent-red)';
+            }
+        });
+        
+        async function loadProjects() {
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/projects`);
+                const data = await res.json();
+                
+                const list = document.getElementById('projectsList');
+                
+                if (!data.projects || data.projects.length === 0) {
+                    list.innerHTML = '<p style="color: var(--text-muted);">No projects yet. Click "Seed Database" to add sample data.</p>';
+                    return;
+                }
+                
+                list.innerHTML = data.projects.map(p => `
+                    <div class="project-item">
+                        <div>
+                            <h3>${p.name}</h3>
+                            <p style="color: var(--accent-cyan); font-size: 0.85rem; margin-bottom: 0.5rem;">${p.category}</p>
+                            <p>${p.description}</p>
+                            <div class="project-meta">
+                                <span>Tech: ${p.techStack?.join(', ') || 'N/A'}</span>
+                            </div>
+                            <a href="${p.link}" target="_blank" style="color: var(--accent-cyan); font-size: 0.85rem; margin-top: 0.5rem; display: inline-block;">View Project →</a>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem; flex-direction: column;">
+                            <button onclick='editProject("${p._id}", "${p.name.replace(/"/g, '&quot;')}", "${p.category}", "${p.description.replace(/"/g, '&quot;')}", ${JSON.stringify(p.techStack || [])}, "${p.link || ''}")' class="btn btn-outline btn-small">Edit</button>
+                            <button onclick="deleteProject('${p._id}')" class="btn btn-outline btn-small" style="background: rgba(255,51,51,0.1); border-color: var(--accent-red); color: var(--accent-red);">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading projects:', error);
+                document.getElementById('projectsList').innerHTML = '<p style="color: var(--accent-red);">Error loading projects</p>';
+            }
+        }
+        
+        async function deleteProject(id) {
+            if (!confirm('Delete this project?')) return;
+            
+            try {
+                const token = localStorage.getItem('adminToken');
+                await fetch(`${API_BASE_URL}/api/projects/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                loadProjects();
+            } catch (error) {
+                alert('Error deleting project');
+            }
+        }
+
+        loadProjects();
+    </script>
+</body>
+</html>

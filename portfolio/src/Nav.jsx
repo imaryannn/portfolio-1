@@ -36,11 +36,11 @@ export default function Nav() {
           padding: "8px 8px 8px 24px",
           borderRadius: "99px",
           transition: "all 0.5s ease",
-          background: scrolled ? "rgba(255,255,255,0.05)" : "transparent",
-          backdropFilter: scrolled ? "blur(32px) saturate(180%)" : "none",
-          WebkitBackdropFilter: scrolled ? "blur(32px) saturate(180%)" : "none",
+          background: scrolled ? "rgba(255,255,255,0.055)" : "transparent",
+          backdropFilter: scrolled ? "blur(24px)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(24px)" : "none",
           border: scrolled ? "1px solid rgba(255,255,255,0.1)" : "1px solid transparent",
-          boxShadow: scrolled ? "0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(0,0,0,0.08)" : "none",
+          boxShadow: scrolled ? "inset 0 1px 0 rgba(255,255,255,0.05)" : "none",
         }}
       >
         {/* Logo */}
@@ -50,13 +50,13 @@ export default function Nav() {
             fontFamily: "'Plus Jakarta Sans', sans-serif",
             fontWeight: 800,
             fontSize: "16px",
-            color: "#F6C667",
+            color: "rgba(255,255,255,0.9)",
             textDecoration: "none",
             letterSpacing: "-0.01em",
             marginRight: "8px",
           }}
         >
-          Aryan<span style={{ color: "#A8F0C6" }}>.</span>
+          Aryan<span style={{ color: "rgba(255,255,255,0.3)" }}>.</span>
         </a>
 
         {/* Divider */}
@@ -71,15 +71,15 @@ export default function Nav() {
                 style={{
                   fontSize: "14px",
                   fontWeight: 500,
-                  color: "rgba(248,245,238,0.65)",
+                  color: "rgba(255,255,255,0.55)",
                   textDecoration: "none",
                   padding: "7px 14px",
                   borderRadius: "99px",
                   transition: "background 0.2s, color 0.2s",
                   display: "block",
                 }}
-                onMouseEnter={e => { e.currentTarget.style.color = "#F8F5EE"; e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
-                onMouseLeave={e => { e.currentTarget.style.color = "rgba(248,245,238,0.65)"; e.currentTarget.style.background = "transparent"; }}
+                onMouseEnter={e => { e.currentTarget.style.color = "rgba(255,255,255,0.95)"; e.currentTarget.style.background = "rgba(255,255,255,0.15)"; }}
+                onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.55)"; e.currentTarget.style.background = "transparent"; }}
               >
                 {label}
               </a>
@@ -93,15 +93,16 @@ export default function Nav() {
                 borderRadius: "99px",
                 fontSize: "14px",
                 fontWeight: 600,
-                background: "#F6C667",
+                background: "rgba(255,255,255,0.9)",
                 color: "#0F2A1F",
                 textDecoration: "none",
-                transition: "opacity 0.2s",
+                transition: "background 0.2s, color 0.2s",
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
-                boxShadow: "0 2px 8px rgba(246,198,103,0.3)",
+                boxShadow: "none",
+                border: "1px solid rgba(255,255,255,0.1)",
               }}
-              onMouseEnter={e => e.currentTarget.style.opacity = "0.88"}
-              onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+              onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.75)"}
+              onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.9)"}
             >
               Hire me
             </a>

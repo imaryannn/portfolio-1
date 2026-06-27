@@ -1,4 +1,5 @@
 import { useState } from "react";
+import FadeIn from "./FadeIn";
 
 const meta = [
   { label: "Response",     val: "Direct email reply" },
@@ -23,8 +24,7 @@ export default function Contact() {
           }}
         >
 
-          {/* Left — info */}
-          <div>
+          <FadeIn delay={100} from="left">
             <p className="section-label">Contact</p>
             <h2
               className="section-title"
@@ -64,113 +64,114 @@ export default function Contact() {
                 </div>
               ))}
             </div>
-          </div>
+          </FadeIn>
 
-          {/* Right — form */}
-          <div
-            className="glass-card"
-            style={{ borderRadius: "28px", padding: "48px" }}
-          >
-            {sent ? (
-              <div style={{ padding: "48px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", textAlign: "center" }}>
-                <div
-                  style={{
-                    width: "52px", height: "52px", borderRadius: "50%",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: "20px",
-                    background: "rgba(168,240,198,0.08)",
-                    border: "1px solid rgba(168,240,198,0.22)",
-                    color: "#A8F0C6",
-                  }}
-                >
-                  ✓
+          <FadeIn delay={200} from="right">
+            <div
+              className="glass-card"
+              style={{ borderRadius: "28px", padding: "48px" }}
+            >
+              {sent ? (
+                <div style={{ padding: "48px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", textAlign: "center" }}>
+                  <div
+                    style={{
+                      width: "52px", height: "52px", borderRadius: "50%",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontSize: "20px",
+                      background: "rgba(168,240,198,0.08)",
+                      border: "1px solid rgba(168,240,198,0.22)",
+                      color: "#A8F0C6",
+                    }}
+                  >
+                    ✓
+                  </div>
+                  <p style={{ fontSize: "18px", fontWeight: 700, color: "#F8F5EE", fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Message sent!</p>
+                  <p style={{ fontSize: "14px", color: "rgba(248,245,238,0.42)" }}>I'll get back to you within 1–2 days.</p>
                 </div>
-                <p style={{ fontSize: "18px", fontWeight: 700, color: "#F8F5EE", fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Message sent!</p>
-                <p style={{ fontSize: "14px", color: "rgba(248,245,238,0.42)" }}>I'll get back to you within 1–2 days.</p>
-              </div>
-            ) : (
-              <form
-                onSubmit={e => { e.preventDefault(); setSent(true); }}
-                style={{ display: "flex", flexDirection: "column", gap: "24px" }}
-              >
-                {[
-                  { id: "name",  label: "Your name",  type: "text",  placeholder: "Aryan" },
-                  { id: "email", label: "Email",       type: "email", placeholder: "you@example.com" },
-                ].map(({ id, label, type, placeholder }) => (
-                  <div key={id} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                    <label style={{ fontSize: "13px", fontWeight: 500, color: "rgba(248,245,238,0.45)" }}>{label}</label>
-                    <input
-                      type={type}
+              ) : (
+                <form
+                  onSubmit={e => { e.preventDefault(); setSent(true); }}
+                  style={{ display: "flex", flexDirection: "column", gap: "24px" }}
+                >
+                  {[
+                    { id: "name",  label: "Your name",  type: "text",  placeholder: "Aryan" },
+                    { id: "email", label: "Email",       type: "email", placeholder: "you@example.com" },
+                  ].map(({ id, label, type, placeholder }) => (
+                    <div key={id} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                      <label style={{ fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.7)" }}>{label}</label>
+                      <input
+                        type={type}
+                        required
+                        placeholder={placeholder}
+                        value={form[id]}
+                        onChange={set(id)}
+                        style={{
+                          width: "100%",
+                          padding: "15px 18px",
+                          fontSize: "15px",
+                          color: "#fff",
+                          background: "rgba(255,255,255,0.08)",
+                          border: "1px solid rgba(255,255,255,0.18)",
+                          borderRadius: "14px",
+                          outline: "none",
+                          transition: "border-color 0.2s",
+                        }}
+                        onFocus={e => e.target.style.borderColor = "rgba(255,255,255,0.4)"}
+                        onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.18)"}
+                      />
+                    </div>
+                  ))}
+
+                  <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <label style={{ fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.7)" }}>Message</label>
+                    <textarea
                       required
-                      placeholder={placeholder}
-                      value={form[id]}
-                      onChange={set(id)}
+                      rows={5}
+                      placeholder="Tell me about your project…"
+                      value={form.message}
+                      onChange={set("message")}
                       style={{
                         width: "100%",
                         padding: "15px 18px",
                         fontSize: "15px",
-                        color: "#F8F5EE",
-                        background: "rgba(255,255,255,0.04)",
-                        border: "1px solid rgba(255,255,255,0.09)",
+                        color: "#fff",
+                        background: "rgba(255,255,255,0.08)",
+                        border: "1px solid rgba(255,255,255,0.18)",
                         borderRadius: "14px",
                         outline: "none",
+                        resize: "none",
                         transition: "border-color 0.2s",
                       }}
-                      onFocus={e => e.target.style.borderColor = "rgba(246,198,103,0.4)"}
-                      onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.09)"}
+                      onFocus={e => e.target.style.borderColor = "rgba(255,255,255,0.4)"}
+                      onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.18)"}
                     />
                   </div>
-                ))}
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                  <label style={{ fontSize: "13px", fontWeight: 500, color: "rgba(248,245,238,0.45)" }}>Message</label>
-                  <textarea
-                    required
-                    rows={5}
-                    placeholder="Tell me about your project…"
-                    value={form.message}
-                    onChange={set("message")}
+                  <button
+                    type="submit"
                     style={{
                       width: "100%",
-                      padding: "15px 18px",
-                      fontSize: "15px",
-                      color: "#F8F5EE",
-                      background: "rgba(255,255,255,0.04)",
-                      border: "1px solid rgba(255,255,255,0.09)",
+                      padding: "16px",
+                      marginTop: "4px",
                       borderRadius: "14px",
-                      outline: "none",
-                      resize: "none",
-                      transition: "border-color 0.2s",
+                      fontSize: "15px",
+                      fontWeight: 600,
+                      background: "#F6C667",
+                      color: "#0F2A1F",
+                      border: "none",
+                      cursor: "pointer",
+                      transition: "opacity 0.2s, transform 0.15s",
+                      fontFamily: "'Plus Jakarta Sans', sans-serif",
                     }}
-                    onFocus={e => e.target.style.borderColor = "rgba(246,198,103,0.4)"}
-                    onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.09)"}
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  style={{
-                    width: "100%",
-                    padding: "16px",
-                    marginTop: "4px",
-                    borderRadius: "14px",
-                    fontSize: "15px",
-                    fontWeight: 600,
-                    background: "#F6C667",
-                    color: "#0F2A1F",
-                    border: "none",
-                    cursor: "pointer",
-                    transition: "opacity 0.2s, transform 0.15s",
-                    fontFamily: "'Plus Jakarta Sans', sans-serif",
-                  }}
-                  onMouseEnter={e => { e.currentTarget.style.opacity = "0.9"; e.currentTarget.style.transform = "scale(1.01)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "scale(1)"; }}
-                >
-                  Send message
-                </button>
-              </form>
-            )}
-          </div>
+                    onMouseEnter={e => { e.currentTarget.style.opacity = "0.9"; e.currentTarget.style.transform = "scale(1.01)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "scale(1)"; }}
+                  >
+                    Send message
+                  </button>
+                </form>
+              )}
+            </div>
+          </FadeIn>
         </div>
       </div>
     </section>

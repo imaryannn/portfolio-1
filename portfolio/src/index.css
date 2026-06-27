@@ -15,6 +15,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+section { overflow: clip; overflow-clip-margin: 0px; }
 
 body {
   background: #0F2A1F;
@@ -27,6 +28,77 @@ body {
 
 h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; }
 
+/* ─── Unified page background (same video + overlays everywhere) ─── */
+.page-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.page-bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.page-bg-overlay-left {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(15, 42, 31, 0.97) 0%,
+    rgba(15, 42, 31, 0.7) 30%,
+    rgba(15, 42, 31, 0.1) 55%,
+    transparent 70%
+  );
+}
+
+.page-bg-overlay-scroll {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top right, rgba(246, 198, 103, 0.1) 0%, transparent 38%),
+    linear-gradient(180deg, rgba(15, 42, 31, 0.15) 0%, rgba(15, 42, 31, 0.88) 100%);
+  transition: opacity 0.08s linear;
+}
+
+.page-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Hero (content only — bg lives in PageBackground) ─── */
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hero-inner {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: clamp(24px, 5vw, 96px);
+}
+
+.hero-ctas {
+  position: absolute;
+  bottom: 48px;
+  left: 50%;
+  z-index: 1;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+}
+
 /* ─── Container ─── */
 .container {
   width: 100%;
@@ -37,7 +109,20 @@ h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; }
 
 /* ─── Section rhythm ─── */
 .section {
+  position: relative;
   padding-block: clamp(80px, 12vw, 160px);
+}
+
+.section + .section::before,
+footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(92%, 900px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(246, 198, 103, 0.1), transparent);
 }
 
 /* ─── Section header ─── */
@@ -46,7 +131,7 @@ h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; }
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #A8F0C6;
+  color: rgba(168, 240, 198, 0.75);
   margin-bottom: 20px;
 }
 
@@ -61,17 +146,24 @@ h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; }
 
 /* ─── Glass utilities ─── */
 @utility glass {
-  background: rgba(255, 244, 214, 0.055);
+  background: rgba(255, 255, 255, 0.055);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(246, 198, 103, 0.13);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 @utility glass-card {
-  background: rgba(29, 77, 58, 0.2);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
-  border: 1px solid rgba(255, 255, 255, 0.055);
+  background: rgba(255, 255, 255, 0.055);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 @utility glass-dark {
@@ -86,7 +178,7 @@ h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; }
 ::-webkit-scrollbar-track { background: #0F2A1F; }
 ::-webkit-scrollbar-thumb { background: #1D4D3A; border-radius: 99px; }
 
-input::placeholder, textarea::placeholder { color: rgba(248, 245, 238, 0.25); }
+input::placeholder, textarea::placeholder { color: rgba(255, 255, 255, 0.35); }
 input, textarea { background: transparent; font-family: 'Inter', sans-serif; }
 
 /* ─── Liquid glass text ─── */
