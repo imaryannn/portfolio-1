@@ -1,13 +1,14 @@
-export default function PageBackground({ videoRef, scrollDark = 0 }) {
+function frameSrc(index) {
+  return `/frames/frame-${String(index + 1).padStart(4, "0")}.jpg`;
+}
+
+export default function PageBackground({ frameIndex = 0, scrollDark = 0 }) {
   return (
     <div className="page-bg" aria-hidden="true">
-      <video
-        ref={videoRef}
+      <img
         className="page-bg-video"
-        src="/hero.mp4"
-        muted
-        playsInline
-        preload="auto"
+        src={frameSrc(frameIndex)}
+        alt=""
       />
       <div className="page-bg-overlay-left" />
       <div
