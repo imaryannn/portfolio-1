@@ -20,10 +20,10 @@ export default function Nav() {
 
   return (
     <motion.div
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
+      initial={{ y: -80, opacity: 0, x: "-50%" }}
+      animate={{ y: 0, opacity: 1, x: "-50%" }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      style={{ position: "fixed", top: "20px", left: "50%", transform: "translateX(-50%)", zIndex: 50, width: "fit-content" }}
+      style={{ position: "fixed", top: "20px", left: "50%", zIndex: 50, width: "fit-content" }}
     >
     <nav
       style={{
