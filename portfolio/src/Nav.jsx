@@ -121,11 +121,34 @@ export default function Nav() {
         <div
           style={{
             position: "fixed",
-            top: "16px",
-            right: "16px",
+            top: "0",
+            left: "0",
+            right: "0",
             zIndex: 100,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "16px 16px 8px 20px",
+            background: scrolled || menuOpen ? "rgba(15,42,31,0.85)" : "transparent",
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+            transition: "background 0.3s ease",
           }}
         >
+          <a
+            href="#home"
+            style={{
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
+              fontWeight: 800,
+              fontSize: "17px",
+              color: "#F8F5EE",
+              textDecoration: "none",
+              letterSpacing: "-0.01em",
+            }}
+          >
+            Aryan<span style={{ color: "rgba(255,255,255,0.3)" }}>.</span>
+          </a>
+
           <button
             onClick={() => setMenuOpen(o => !o)}
             aria-label="Toggle menu"
@@ -143,6 +166,7 @@ export default function Nav() {
               justifyContent: "center",
               gap: "5px",
               cursor: "pointer",
+              flexShrink: 0,
               transition: "all 0.3s ease",
             }}
           >
@@ -159,7 +183,7 @@ export default function Nav() {
             transition={{ duration: 0.2 }}
             style={{
               position: "fixed",
-              top: "72px",
+              top: "68px",
               right: "16px",
               zIndex: 99,
               background: "rgba(15, 42, 31, 0.92)",
