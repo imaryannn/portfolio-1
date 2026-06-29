@@ -88,6 +88,20 @@ ADMIN_PASSWORD=yourpassword
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
+### MongoDB Setup (Required)
+
+The backend stores projects, skills, profile, and admin data in MongoDB.
+
+1. Go to [mongodb.com/atlas](https://www.mongodb.com/atlas) and create a free cluster
+2. In your cluster, click **Connect** → **Drivers**
+3. Copy the connection string (looks like `mongodb+srv://<user>:<password>@cluster.xxxxx.mongodb.net/`)
+4. Set it as `MONGODB_URI` in your `.env`
+5. The backend auto-creates a database called `myfolio` with collections:
+   - `users` — admin accounts
+   - `projects` — portfolio projects
+   - `skills` — skill categories
+   - `profile` — site profile data
+
 ### Gemini API Setup (Optional)
 
 Used by the admin panel's AI project draft feature.
