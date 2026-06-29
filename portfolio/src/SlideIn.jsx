@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-const DISTANCE = 500;
+const DISTANCE = 400;
 
 const variants = {
   left: { x: -DISTANCE },
@@ -14,8 +14,8 @@ export default function SlideIn({ children, from = "left", delay = 0, style = {}
     <motion.div
       initial={variants[from]}
       whileInView={{ x: 0, y: 0 }}
-      viewport={{ once: false, margin: "-60px" }}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: delay / 1000 }}
+      viewport={{ once: false, margin: "0px" }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: delay / 1000 }}
       style={style}
       {...props}
     >

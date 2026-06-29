@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import SlideIn from "./SlideIn";
+import { motion } from "framer-motion";
 
 const links = [
   { label: "About",    href: "#about" },
@@ -19,7 +19,12 @@ export default function Nav() {
   }, []);
 
   return (
-    <SlideIn from="top" delay={0} style={{ position: "fixed", top: "20px", left: "50%", transform: "translateX(-50%)", zIndex: 50, width: "fit-content" }}>
+    <motion.div
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      style={{ position: "fixed", top: "20px", left: "50%", transform: "translateX(-50%)", zIndex: 50, width: "fit-content" }}
+    >
     <nav
       style={{
         width: "fit-content",
@@ -105,6 +110,6 @@ export default function Nav() {
         </ul>
       </div>
     </nav>
-    </SlideIn>
+    </motion.div>
   );
 }

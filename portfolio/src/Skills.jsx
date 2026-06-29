@@ -21,7 +21,7 @@ export default function Skills() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map(({ label, color, skills }, i) => (
-            <SlideIn key={label} delay={i * 80} from="bottom">
+            <SlideIn key={label} delay={i * 80} from={["left", "bottom", "right"][i % 3]}>
               <div
                 className="project-card"
                 style={{ borderTopColor: color }}
