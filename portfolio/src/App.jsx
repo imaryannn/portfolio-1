@@ -1,5 +1,5 @@
 import "./index.css";
-import { useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useScroll, useMotionValueEvent } from "framer-motion";
 import Nav from "./Nav";
 import PageBackground from "./PageBackground";
@@ -10,10 +10,10 @@ import Skills from "./Skills";
 import Contact from "./Contact";
 import Footer from "./Footer";
 
-const FRAME_COUNT = 145;
-
 export default function App() {
-  const [frameIndex, setFrameIndex] = useState(Math.floor(FRAME_COUNT / 2));
+  const videoRef = useRef(null);
+  const rafRef = useRef(null);
+  const targetTime = useRef(0);
   const [scrollDark, setScrollDark] = useState(0);
   const { scrollY } = useScroll();
 
@@ -24,17 +24,38 @@ export default function App() {
   });
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      const idx = Math.floor((1 - e.clientX / window.innerWidth) * FRAME_COUNT);
-      setFrameIndex(Math.max(0, Math.min(FRAME_COUNT - 1, idx)));
+    const video = videoRef.current;
+    if (!video) return;
+    const onLoaded = () => {
+      video.pause();
+      video.currentTime = video.duration / 2;
     };
+    video.addEventListener("loadedmetadata", onLoaded);
+    return () => video.removeEventListener("loadedmetadata", onLoaded);
+  }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const video = videoRef.current;
+      if (!video || !video.duration) return;
+      targetTime.current = (1 - e.clientX / window.innerWidth) * video.duration;
+      if (rafRef.current) return;
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = null;
+        const v = videoRef.current;
+        if (!v) return;
+        if (v.fastSeek) v.fastSeek(targetTime.current);
+        else v.currentTime = targetTime.current;
+      });
+    };
+
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   return (
     <>
-      <PageBackground frameIndex={frameIndex} scrollDark={scrollDark} />
+      <PageBackground videoRef={videoRef} scrollDark={scrollDark} />
       <div className="page-content">
         <Nav />
         <HeroSection />
