@@ -85,7 +85,18 @@ JWT_SECRET=random256bithex
 SETUP_KEY=random256bithex
 ADMIN_EMAIL=admin@example.com
 ADMIN_PASSWORD=yourpassword
+GEMINI_API_KEY=your_gemini_api_key_here
 ```
+
+### Gemini API Setup (Optional)
+
+Used by the admin panel's AI project draft feature.
+
+1. Go to [aistudio.google.com/apikey](https://aistudio.google.com/apikey)
+2. Click **Create API Key** (free tier available)
+3. Copy the key and set it as `GEMINI_API_KEY` in your `.env`
+
+The integration uses the `gemini-2.5-flash` model for generating project descriptions from prompts.
 
 ## Deployment
 
