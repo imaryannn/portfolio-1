@@ -86,7 +86,7 @@ export default function Projects() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
           {projects.map((p, i) => (
-            <SlideIn key={p.name} delay={i * 80} from={["left", "bottom", "right"][i % 3]}>
+            <SlideIn key={p.name} delay={i * 80} from="bottom">
               <div className="project-card" style={{ borderTopColor: p.accent }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "24px" }}>
                   <span
