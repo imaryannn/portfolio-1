@@ -1,20 +1,15 @@
-import { useScroll, useMotionValueEvent } from "framer-motion";
-import { useState } from "react";
+import { useContext } from "react";
 import SlideIn from "./SlideIn";
+import { LenisScrollContext } from "./App";
 
 export default function HeroSection() {
-  const { scrollY } = useScroll();
-  const [progress, setProgress] = useState(0);
+  const scrollY = useContext(LenisScrollContext);
+  const p = Math.min(scrollY / (window.innerHeight * 0.5), 1);
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    const p = Math.min(latest / (window.innerHeight * 0.5), 1);
-    setProgress(p);
-  });
-
-  const slideLeft  = `translateX(${-progress * 100}%)`;
-  const slideRight = `translateX(${progress * 100}%)`;
-  const slideDown  = `translateY(${progress * 100}%)`;
-  const opacity    = 1 - progress;
+  const slideLeft  = `translateX(${-p * 100}%)`;
+  const slideRight = `translateX(${p * 100}%)`;
+  const slideDown  = `translateY(${p * 100}%)`;
+  const opacity    = 1 - p;
 
   return (
     <section id="home" className="hero-section">

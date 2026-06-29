@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import { motion } from "framer-motion";
+import { LenisScrollContext } from "./App";
 
 const links = [
   { label: "About",    href: "#about" },
@@ -9,14 +10,9 @@ const links = [
 ];
 
 export default function Nav() {
-  const [scrolled, setScrolled] = useState(false);
+  const scrollY = useContext(LenisScrollContext);
+  const scrolled = scrollY > 20;
   const [hoveredIdx, setHoveredIdx] = useState(null);
-
-  useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", fn, { passive: true });
-    return () => window.removeEventListener("scroll", fn);
-  }, []);
 
   return (
     <motion.div

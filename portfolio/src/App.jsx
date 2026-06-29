@@ -1,6 +1,6 @@
 import "./index.css";
-import { useRef, useState, useEffect } from "react";
-import { useScroll, useMotionValueEvent } from "framer-motion";
+import { useRef, useState, useEffect, createContext } from "react";
+import Lenis from "lenis";
 import Nav from "./Nav";
 import PageBackground from "./PageBackground";
 import HeroSection from "./HeroSection";
@@ -10,18 +10,40 @@ import Skills from "./Skills";
 import Contact from "./Contact";
 import Footer from "./Footer";
 
+export const LenisScrollContext = createContext(0);
+
 export default function App() {
   const videoRef = useRef(null);
   const rafRef = useRef(null);
   const targetTime = useRef(0);
+  const lenisRef = useRef(null);
+  const [scrollY, setScrollY] = useState(0);
   const [scrollDark, setScrollDark] = useState(0);
-  const { scrollY } = useScroll();
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    const heroHeight = window.innerHeight;
-    const progress = Math.min(Math.max(latest / (heroHeight * 0.85), 0), 1);
-    setScrollDark(progress);
-  });
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: "vertical",
+      smoothWheel: true,
+    });
+    lenisRef.current = lenis;
+
+    lenis.on("scroll", (e) => {
+      setScrollY(e.animatedScroll);
+      const heroHeight = window.innerHeight;
+      const progress = Math.min(Math.max(e.animatedScroll / (heroHeight * 0.85), 0), 1);
+      setScrollDark(progress);
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    return () => lenis.destroy();
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -54,7 +76,7 @@ export default function App() {
   }, []);
 
   return (
-    <>
+    <LenisScrollContext.Provider value={scrollY}>
       <PageBackground videoRef={videoRef} scrollDark={scrollDark} />
       <div className="page-content">
         <Nav />
@@ -65,6 +87,6 @@ export default function App() {
         <Contact />
         <Footer />
       </div>
-    </>
+    </LenisScrollContext.Provider>
   );
 }
