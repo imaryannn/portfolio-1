@@ -129,10 +129,6 @@ export default function Nav() {
             alignItems: "center",
             justifyContent: "space-between",
             padding: "16px 16px 8px 20px",
-            background: scrolled || menuOpen ? "rgba(15,42,31,0.85)" : "transparent",
-            backdropFilter: "blur(16px)",
-            WebkitBackdropFilter: "blur(16px)",
-            transition: "background 0.3s ease",
           }}
         >
           <a
