@@ -155,15 +155,16 @@ export default function Nav() {
               height: "44px",
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
+              alignItems: "flex-start",
               justifyContent: "center",
               gap: "5px",
               cursor: "pointer",
               flexShrink: 0,
+              padding: "0 8px",
             }}
           >
-            <span style={{ display: "block", width: "14px", height: "2px", background: "#F8F5EE", borderRadius: "2px", transition: "all 0.3s ease", transform: menuOpen ? "rotate(45deg) translate(5px, 5px)" : "none" }} />
-            <span style={{ display: "block", width: "20px", height: "2px", background: "#F8F5EE", borderRadius: "2px", transition: "all 0.3s ease", transform: menuOpen ? "rotate(-45deg) translate(5px, -5px)" : "none" }} />
+            <span style={{ display: "block", width: "20px", height: "2px", background: "#F8F5EE", borderRadius: "2px", transition: "all 0.3s ease", transform: menuOpen ? "rotate(45deg) translate(4px, 4px)" : "none" }} />
+            <span style={{ display: "block", width: "14px", height: "2px", background: "#F8F5EE", borderRadius: "2px", transition: "all 0.3s ease", transform: menuOpen ? "rotate(-45deg) translate(3px, -3px)" : "none" }} />
           </button>
         </div>
 
