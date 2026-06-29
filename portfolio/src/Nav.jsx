@@ -149,11 +149,8 @@ export default function Nav() {
             onClick={() => setMenuOpen(o => !o)}
             aria-label="Toggle menu"
             style={{
-              background: scrolled || menuOpen ? "rgba(255,255,255,0.08)" : "transparent",
-              backdropFilter: "blur(16px)",
-              WebkitBackdropFilter: "blur(16px)",
-              border: scrolled || menuOpen ? "1px solid rgba(255,255,255,0.1)" : "1px solid transparent",
-              borderRadius: "12px",
+              background: "transparent",
+              border: "none",
               width: "44px",
               height: "44px",
               display: "flex",
@@ -163,11 +160,9 @@ export default function Nav() {
               gap: "5px",
               cursor: "pointer",
               flexShrink: 0,
-              transition: "all 0.3s ease",
             }}
           >
-            <span style={{ display: "block", width: "20px", height: "2px", background: "#F8F5EE", borderRadius: "2px", transition: "all 0.3s ease", transform: menuOpen ? "rotate(45deg) translate(5px, 5px)" : "none" }} />
-            <span style={{ display: "block", width: "20px", height: "2px", background: "#F8F5EE", borderRadius: "2px", transition: "all 0.3s ease", opacity: menuOpen ? 0 : 1 }} />
+            <span style={{ display: "block", width: "14px", height: "2px", background: "#F8F5EE", borderRadius: "2px", transition: "all 0.3s ease", transform: menuOpen ? "rotate(45deg) translate(5px, 5px)" : "none" }} />
             <span style={{ display: "block", width: "20px", height: "2px", background: "#F8F5EE", borderRadius: "2px", transition: "all 0.3s ease", transform: menuOpen ? "rotate(-45deg) translate(5px, -5px)" : "none" }} />
           </button>
         </div>

@@ -15,7 +15,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-section { overflow: clip; overflow-clip-margin: 0px; }
+section { overflow: visible; }
 
 body {
   background: #0F2A1F;
