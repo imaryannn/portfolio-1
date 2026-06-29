@@ -13,16 +13,9 @@ export default function About() {
   return (
     <section id="about" className="section">
       <div className="container">
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "clamp(40px, 6vw, 96px)",
-            alignItems: "start",
-          }}
-        >
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-[clamp(40px,6vw,96px)]" style={{ alignItems: "start" }}>
           {/* Left — header + prose */}
-          <SlideIn from="left" style={{ paddingTop: "120px" }}>
+          <SlideIn from="left" style={{ paddingTop: "clamp(40px, 8vw, 120px)" }}>
             <div className="section-accent-bar" />
             <p className="section-label">About me</p>
             <h2 className="section-title" style={{ maxWidth: "18ch", marginBottom: "40px" }}>
@@ -73,16 +66,9 @@ export default function About() {
           </SlideIn>
 
           {/* Right — glass card */}
-          <SlideIn delay={150} from="right" style={{ paddingTop: "120px", maxWidth: "420px", marginLeft: "auto" }}>
-            <div className="glass-card" style={{ borderRadius: "28px", padding: "40px" }}>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: "32px",
-                  marginBottom: "36px",
-                }}
-              >
+          <SlideIn delay={150} from="right" style={{ paddingTop: "clamp(40px, 8vw, 120px)", maxWidth: "420px", marginLeft: "auto" }}>
+            <div className="glass-card" style={{ borderRadius: "28px", padding: "clamp(24px, 4vw, 40px)" }}>
+              <div className="grid grid-cols-2 gap-[clamp(20px,3vw,32px)]" style={{ marginBottom: "36px" }}>
                 {facts.map(({ label, val }) => (
                   <div key={label}>
                     <p

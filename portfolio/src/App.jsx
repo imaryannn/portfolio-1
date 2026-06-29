@@ -1,5 +1,5 @@
 import "./index.css";
-import { useRef, useState, useEffect, createContext } from "react";
+import { useRef, useState, useEffect } from "react";
 import Lenis from "lenis";
 import Nav from "./Nav";
 import PageBackground from "./PageBackground";
@@ -9,8 +9,7 @@ import Projects from "./Projects";
 import Skills from "./Skills";
 import Contact from "./Contact";
 import Footer from "./Footer";
-
-export const LenisScrollContext = createContext(0);
+import { LenisScrollContext } from "./LenisScrollContext";
 
 export default function App() {
   const videoRef = useRef(null);

@@ -46,7 +46,7 @@ export default function Footer() {
           Aryan<span style={{ color: "#A8F0C6" }}>.</span>
         </p>
 
-        <div style={{ display: "flex", gap: "24px", marginLeft: "160px" }}>
+        <div style={{ display: "flex", gap: "24px", flexWrap: "wrap", justifyContent: "center" }}>
           {[
             { label: "GitHub",   href: "https://github.com/imaryannn", icon: <GitHubIcon /> },
             { label: "LinkedIn", href: "https://www.linkedin.com/in/aryan-2064153a0/", icon: <LinkedInIcon /> },

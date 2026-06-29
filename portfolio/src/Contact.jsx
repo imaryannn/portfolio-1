@@ -34,14 +34,7 @@ export default function Contact() {
   return (
     <section id="contact" className="section">
       <div className="container">
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "clamp(40px, 7vw, 112px)",
-            alignItems: "center",
-          }}
-        >
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-[clamp(40px,7vw,112px)]" style={{ alignItems: "center" }}>
           <SlideIn delay={100} from="left">
             <div className="section-accent-bar" />
             <p className="section-label">Contact</p>
@@ -77,7 +70,7 @@ export default function Contact() {
           <SlideIn delay={200} from="right">
             <div
               className="glass-card"
-              style={{ borderRadius: "28px", padding: "48px" }}
+              style={{ borderRadius: "28px", padding: "clamp(24px, 4vw, 48px)" }}
             >
               {status === "sent" ? (
                 <div style={{ padding: "48px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", textAlign: "center" }}>

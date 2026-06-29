@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { motion } from "framer-motion";
-import { LenisScrollContext } from "./App";
+import { LenisScrollContext } from "./LenisScrollContext";
 
 const links = [
   { label: "About",    href: "#about" },
@@ -19,19 +19,24 @@ export default function Nav() {
       initial={{ y: -80, opacity: 0, x: "-50%" }}
       animate={{ y: 0, opacity: 1, x: "-50%" }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      style={{ position: "fixed", top: "20px", left: "50%", zIndex: 50, width: "fit-content" }}
+      style={{ position: "fixed", top: "12px", left: "50%", zIndex: 50, width: "min(95vw, fit-content)" }}
     >
     <nav
       style={{
-        width: "fit-content",
+        width: "100%",
+        overflowX: "auto",
+        overflowY: "hidden",
+        WebkitOverflowScrolling: "touch",
+        scrollbarWidth: "none",
+        msOverflowStyle: "none",
       }}
     >
       <div
         style={{
           display: "flex",
           alignItems: "center",
-          gap: "8px",
-          padding: "8px 8px 8px 24px",
+          gap: "4px",
+          padding: "6px 6px 6px 16px",
           borderRadius: "99px",
           transition: "all 0.5s ease",
           background: scrolled ? "rgba(255,255,255,0.055)" : "transparent",
@@ -39,6 +44,8 @@ export default function Nav() {
           WebkitBackdropFilter: scrolled ? "blur(24px)" : "none",
           border: scrolled ? "1px solid rgba(255,255,255,0.1)" : "1px solid transparent",
           boxShadow: scrolled ? "inset 0 1px 0 rgba(255,255,255,0.05)" : "none",
+          width: "max-content",
+          margin: "0 auto",
         }}
       >
         <a
@@ -46,19 +53,20 @@ export default function Nav() {
           style={{
             fontFamily: "'Plus Jakarta Sans', sans-serif",
             fontWeight: 800,
-            fontSize: "16px",
+            fontSize: "15px",
             color: "rgba(255,255,255,0.9)",
             textDecoration: "none",
             letterSpacing: "-0.01em",
-            marginRight: "8px",
+            marginRight: "6px",
+            flexShrink: 0,
           }}
         >
           Aryan<span style={{ color: "rgba(255,255,255,0.3)" }}>.</span>
         </a>
 
-        <div style={{ width: "1px", height: "18px", background: "rgba(255,255,255,0.15)", marginRight: "8px" }} />
+        <div style={{ width: "1px", height: "16px", background: "rgba(255,255,255,0.15)", marginRight: "4px", flexShrink: 0 }} />
 
-        <ul style={{ display: "flex", alignItems: "center", gap: "4px", listStyle: "none", margin: 0, padding: 0 }}>
+        <ul style={{ display: "flex", alignItems: "center", gap: "2px", listStyle: "none", margin: 0, padding: 0, flexShrink: 0 }}>
           {links.map(({ label, href }, idx) => (
             <li key={label}>
               <a
@@ -66,36 +74,36 @@ export default function Nav() {
                 onMouseEnter={() => setHoveredIdx(idx)}
                 onMouseLeave={() => setHoveredIdx(null)}
                 style={{
-                  fontSize: "14px",
+                  fontSize: "13px",
                   fontWeight: 500,
                   color: hoveredIdx === idx ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.55)",
                   textDecoration: "none",
-                  padding: "7px 14px",
+                  padding: "5px 10px",
                   borderRadius: "99px",
                   background: hoveredIdx === idx ? "rgba(255,255,255,0.15)" : "transparent",
                   transition: "background 0.2s, color 0.2s",
                   display: "block",
+                  whiteSpace: "nowrap",
                 }}
               >
                 {label}
               </a>
             </li>
           ))}
-          <li style={{ marginLeft: "8px" }}>
+          <li style={{ marginLeft: "4px", flexShrink: 0 }}>
             <a
               href="#contact"
               style={{
-                padding: "9px 20px",
+                padding: "7px 14px",
                 borderRadius: "99px",
-                fontSize: "14px",
+                fontSize: "13px",
                 fontWeight: 600,
                 background: "rgba(255,255,255,0.9)",
                 color: "#0F2A1F",
                 textDecoration: "none",
                 transition: "background 0.2s, color 0.2s",
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
-                boxShadow: "none",
-                border: "1px solid rgba(255,255,255,0.1)",
+                whiteSpace: "nowrap",
               }}
               onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.75)"}
               onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.9)"}

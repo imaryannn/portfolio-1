@@ -75,7 +75,7 @@ h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; }
 .hero-section {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 }
 
@@ -86,7 +86,15 @@ h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-inline: clamp(24px, 5vw, 96px);
+  padding-inline: clamp(24px, 5vw, 64px);
+}
+@media (max-width: 768px) {
+  .hero-inner {
+    flex-direction: column;
+    justify-content: center;
+    gap: 32px;
+    padding-top: 60px;
+  }
 }
 
 .hero-ctas {
@@ -97,6 +105,9 @@ h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; }
   transform: translateX(-50%);
   display: flex;
   gap: 12px;
+}
+@media (max-width: 768px) {
+  .hero-ctas { bottom: 24px; }
 }
 
 /* ─── Container ─── */
