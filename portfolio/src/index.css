@@ -15,7 +15,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-section { overflow: clip; overflow-clip-margin: 0px; }
+section { overflow: visible; }
 
 body {
   background: #0F2A1F;
@@ -308,4 +308,13 @@ input, textarea { background: transparent; font-family: 'Inter', sans-serif; }
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* ─── Mobile overrides ─── */
+@media (width <= 640px) {
+  .section { padding-block: clamp(48px, 14vw, 80px); }
+  .section-title { font-size: clamp(28px, 8vw, 40px); }
+  .section-label { font-size: 11px; margin-bottom: 12px; }
+  .section-accent-bar { width: 24px; margin-bottom: 16px; }
+  .container { padding-inline: 20px; }
 }
