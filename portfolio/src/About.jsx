@@ -1,4 +1,4 @@
-import FadeIn from "./FadeIn";
+import SlideIn from "./SlideIn";
 
 const facts = [
   { label: "Stack",    val: "Node.js · React · MongoDB" },
@@ -22,7 +22,7 @@ export default function About() {
           }}
         >
           {/* Left — header + prose */}
-          <FadeIn from="right" style={{ paddingTop: "120px" }}>
+          <SlideIn from="right" style={{ paddingTop: "120px" }}>
             <div className="section-accent-bar" />
             <p className="section-label">About me</p>
             <h2 className="section-title" style={{ maxWidth: "18ch", marginBottom: "40px" }}>
@@ -70,10 +70,10 @@ export default function About() {
             >
               Let's connect →
             </a>
-          </FadeIn>
+          </SlideIn>
 
           {/* Right — glass card */}
-          <FadeIn delay={150} from="left" style={{ paddingTop: "120px", maxWidth: "420px", marginLeft: "auto" }}>
+          <SlideIn delay={150} from="left" style={{ paddingTop: "120px", maxWidth: "420px", marginLeft: "auto" }}>
             <div className="glass-card" style={{ borderRadius: "28px", padding: "40px" }}>
               <div
                 style={{
@@ -137,7 +137,7 @@ export default function About() {
                 ))}
               </div>
             </div>
-          </FadeIn>
+          </SlideIn>
         </div>
       </div>
     </section>

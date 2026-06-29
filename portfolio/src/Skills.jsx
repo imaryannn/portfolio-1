@@ -1,4 +1,4 @@
-import FadeIn from "./FadeIn";
+import SlideIn from "./SlideIn";
 
 const categories = [
   { label: "Frontend",          color: "#7ED7FF", skills: ["JavaScript (ES6+)", "TypeScript", "React", "Next.js", "HTML5", "CSS3"] },
@@ -13,15 +13,15 @@ export default function Skills() {
     <section id="skills" className="section">
       <div className="container">
 
-        <FadeIn style={{ marginBottom: "64px" }}>
+        <SlideIn style={{ marginBottom: "64px" }}>
           <div className="section-accent-bar" />
           <p className="section-label">Expertise</p>
           <h2 className="section-title">Skills &amp; technologies</h2>
-        </FadeIn>
+        </SlideIn>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map(({ label, color, skills }, i) => (
-            <FadeIn key={label} delay={i * 80} from="bottom">
+            <SlideIn key={label} delay={i * 80} from="bottom">
               <div
                 className="project-card"
                 style={{ borderTopColor: color }}
@@ -66,7 +66,7 @@ export default function Skills() {
                   ))}
                 </div>
               </div>
-            </FadeIn>
+            </SlideIn>
           ))}
         </div>
       </div>

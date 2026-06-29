@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import FadeIn from "./FadeIn";
+import SlideIn from "./SlideIn";
 import { fetchProjects } from "./api";
 
 const FALLBACK = [
@@ -64,7 +64,7 @@ export default function Projects() {
     <section id="projects" className="section">
       <div className="container">
 
-        <FadeIn
+        <SlideIn
           style={{
             display: "flex",
             alignItems: "flex-end",
@@ -82,11 +82,11 @@ export default function Projects() {
           <p style={{ fontSize: "14px", color: "rgba(248,245,238,0.35)", fontWeight: 500 }}>
             {projects.length} projects shipped
           </p>
-        </FadeIn>
+        </SlideIn>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
           {projects.map((p, i) => (
-            <FadeIn key={p.name} delay={i * 80} from="bottom">
+            <SlideIn key={p.name} delay={i * 80} from="bottom">
               <div className="project-card" style={{ borderTopColor: p.accent }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "24px" }}>
                   <span
@@ -171,7 +171,7 @@ export default function Projects() {
                   View project →
                 </a>
               </div>
-            </FadeIn>
+            </SlideIn>
           ))}
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import FadeIn from "./FadeIn";
+import SlideIn from "./SlideIn";
 
 const links = [
   { label: "About",    href: "#about" },
@@ -19,7 +19,7 @@ export default function Nav() {
   }, []);
 
   return (
-    <FadeIn from="top" delay={0} style={{ position: "fixed", top: "20px", left: "50%", transform: "translateX(-50%)", zIndex: 50, width: "fit-content" }}>
+    <SlideIn from="top" delay={0} style={{ position: "fixed", top: "20px", left: "50%", transform: "translateX(-50%)", zIndex: 50, width: "fit-content" }}>
     <nav
       style={{
         width: "fit-content",
@@ -105,6 +105,6 @@ export default function Nav() {
         </ul>
       </div>
     </nav>
-    </FadeIn>
+    </SlideIn>
   );
 }

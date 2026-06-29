@@ -1,5 +1,5 @@
 import { useState } from "react";
-import FadeIn from "./FadeIn";
+import SlideIn from "./SlideIn";
 
 const meta = [
   { label: "Response",     val: "Direct email reply" },
@@ -42,7 +42,7 @@ export default function Contact() {
             alignItems: "center",
           }}
         >
-          <FadeIn delay={100} from="left">
+          <SlideIn delay={100} from="left">
             <div className="section-accent-bar" />
             <p className="section-label">Contact</p>
             <h2
@@ -72,9 +72,9 @@ export default function Contact() {
                 </div>
               ))}
             </div>
-          </FadeIn>
+          </SlideIn>
 
-          <FadeIn delay={200} from="right">
+          <SlideIn delay={200} from="right">
             <div
               className="glass-card"
               style={{ borderRadius: "28px", padding: "48px" }}
@@ -186,7 +186,7 @@ export default function Contact() {
                 </form>
               )}
             </div>
-          </FadeIn>
+          </SlideIn>
         </div>
       </div>
     </section>

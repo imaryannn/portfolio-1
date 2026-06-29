@@ -1,5 +1,5 @@
 import { API_BASE } from "./api";
-import FadeIn from "./FadeIn";
+import SlideIn from "./SlideIn";
 
 const GitHubIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -23,7 +23,7 @@ const LockIcon = () => (
 export default function Footer() {
   return (
     <footer style={{ position: "relative", padding: "48px 0" }}>
-      <FadeIn style={{ width: "100%" }}>
+      <SlideIn style={{ width: "100%" }}>
       <div
         className="container"
         style={{
@@ -98,7 +98,7 @@ export default function Footer() {
           © {new Date().getFullYear()} Aryan. All rights reserved.
         </p>
       </div>
-      </FadeIn>
+      </SlideIn>
     </footer>
   );
 }

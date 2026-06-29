@@ -1,6 +1,6 @@
 import { useScroll, useMotionValueEvent } from "framer-motion";
 import { useState } from "react";
-import FadeIn from "./FadeIn";
+import SlideIn from "./SlideIn";
 
 export default function HeroSection() {
   const { scrollY } = useScroll();
@@ -18,7 +18,7 @@ export default function HeroSection() {
 
   return (
     <section id="home" className="hero-section">
-      <FadeIn from="bottom" delay={200} style={{ width: "100%", height: "100%" }}>
+      <SlideIn from="bottom" delay={200} style={{ width: "100%", height: "100%" }}>
       <div className="hero-inner">
         <div
           style={{
@@ -102,7 +102,7 @@ export default function HeroSection() {
           </a>
         </div>
       </div>
-      </FadeIn>
+      </SlideIn>
     </section>
   );
 }
