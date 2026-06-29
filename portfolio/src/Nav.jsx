@@ -9,10 +9,11 @@ const links = [
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [hoveredIdx, setHoveredIdx] = useState(null);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", fn);
+    window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
@@ -43,7 +44,6 @@ export default function Nav() {
           boxShadow: scrolled ? "inset 0 1px 0 rgba(255,255,255,0.05)" : "none",
         }}
       >
-        {/* Logo */}
         <a
           href="#home"
           style={{
@@ -59,27 +59,26 @@ export default function Nav() {
           Aryan<span style={{ color: "rgba(255,255,255,0.3)" }}>.</span>
         </a>
 
-        {/* Divider */}
         <div style={{ width: "1px", height: "18px", background: "rgba(255,255,255,0.15)", marginRight: "8px" }} />
 
-        {/* Desktop links */}
         <ul style={{ display: "flex", alignItems: "center", gap: "4px", listStyle: "none", margin: 0, padding: 0 }}>
-          {links.map(({ label, href }) => (
+          {links.map(({ label, href }, idx) => (
             <li key={label}>
               <a
                 href={href}
+                onMouseEnter={() => setHoveredIdx(idx)}
+                onMouseLeave={() => setHoveredIdx(null)}
                 style={{
                   fontSize: "14px",
                   fontWeight: 500,
-                  color: "rgba(255,255,255,0.55)",
+                  color: hoveredIdx === idx ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.55)",
                   textDecoration: "none",
                   padding: "7px 14px",
                   borderRadius: "99px",
+                  background: hoveredIdx === idx ? "rgba(255,255,255,0.15)" : "transparent",
                   transition: "background 0.2s, color 0.2s",
                   display: "block",
                 }}
-                onMouseEnter={e => { e.currentTarget.style.color = "rgba(255,255,255,0.95)"; e.currentTarget.style.background = "rgba(255,255,255,0.15)"; }}
-                onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.55)"; e.currentTarget.style.background = "transparent"; }}
               >
                 {label}
               </a>

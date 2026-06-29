@@ -14,31 +14,36 @@ export default function Skills() {
       <div className="container">
 
         <FadeIn style={{ marginBottom: "64px" }}>
+          <div className="section-accent-bar" />
           <p className="section-label">Expertise</p>
           <h2 className="section-title">Skills &amp; technologies</h2>
         </FadeIn>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "24px",
-          }}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map(({ label, color, skills }, i) => (
             <FadeIn key={label} delay={i * 80} from="bottom">
               <div
-                className="glass-card"
-                style={{ borderRadius: "24px", padding: "36px", height: "100%" }}
+                className="project-card"
+                style={{ borderTopColor: color }}
               >
                 <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "28px" }}>
-                  <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: color, flexShrink: 0 }} />
+                  <div
+                    style={{
+                      width: "10px",
+                      height: "10px",
+                      borderRadius: "50%",
+                      background: color,
+                      flexShrink: 0,
+                      boxShadow: `0 0 12px ${color}44`,
+                    }}
+                  />
                   <h3
                     style={{
                       fontSize: "14px",
-                      fontWeight: 600,
-                      color: "rgba(248,245,238,0.75)",
+                      fontWeight: 700,
+                      color: "#F8F5EE",
                       fontFamily: "'Plus Jakarta Sans', sans-serif",
+                      letterSpacing: "0.02em",
                     }}
                   >
                     {label}
@@ -49,15 +54,12 @@ export default function Skills() {
                   {skills.map(s => (
                     <span
                       key={s}
+                      className="skill-tag"
                       style={{
-                        fontSize: "13px",
-                        fontWeight: 500,
-                        padding: "8px 16px",
-                        borderRadius: "99px",
-                        background: "rgba(255,255,255,0.05)",
-                        border: `1px solid ${color}1A`,
-                        color: "rgba(248,245,238,0.75)",
+                        borderColor: `${color}22`,
                       }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = `${color}66`; e.currentTarget.style.background = `${color}15`; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = `${color}22`; e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
                     >
                       {s}
                     </span>

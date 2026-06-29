@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PROFILE — ADMIN</title>
-    <link rel="stylesheet" href="/admin-base.css">
-    <link rel="stylesheet" href="admin-style.css">
-    <script src="/config.js"></script>
+    <link rel="stylesheet" href="./admin-base.css">
+    <link rel="stylesheet" href="./admin-style.css">
+    <script src="./config.js"></script>
 
 </head>
 <body>
     <div class="global-grid"></div>
     
     <nav id="admin-nav">
-        <a href="/admin/dashboard.html" class="nav-logo">ADMIN<span>_CORE</span></a>
+        <a href="/admin/dashboard" class="nav-logo">ADMIN<span>_CORE</span></a>
         <div class="nav-links">
-            <a href="/admin/dashboard.html" class="nav-link">Dashboard</a>
-            <a href="/admin/projects.html" class="nav-link">Projects</a>
-            <a href="/admin/skills.html" class="nav-link">Skills</a>
-            <a href="/admin/profile.html" class="nav-link active">Profile</a>
+            <a href="/admin/dashboard" class="nav-link">Dashboard</a>
+            <a href="/admin/projects" class="nav-link">Projects</a>
+            <a href="/admin/skills" class="nav-link">Skills</a>
+            <a href="/admin/profile" class="nav-link active">Profile</a>
             <a href="/" class="nav-link">View Site</a>
             <button id="logoutBtn" class="btn btn-outline" style="padding: 0.5rem 1rem;">Logout</button>
         </div>
@@ -136,10 +136,11 @@
                     document.getElementById('profileMsg').textContent = '✓ Profile saved successfully!';
                     document.getElementById('profileMsg').style.color = '#27c93f';
                 } else {
-                    throw new Error('Failed');
+                    const errData = await res.json().catch(() => ({}));
+                    throw new Error(errData.error || `HTTP ${res.status}`);
                 }
             } catch (error) {
-                document.getElementById('profileMsg').textContent = '✗ Error saving profile';
+                document.getElementById('profileMsg').textContent = '✗ ' + error.message;
                 document.getElementById('profileMsg').style.color = 'var(--accent-red)';
             }
         });

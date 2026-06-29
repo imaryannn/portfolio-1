@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADMIN ACCESS — ARYAN CORE</title>
-    <link rel="stylesheet" href="/admin-base.css">
+    <link rel="stylesheet" href="./admin-base.css">
     <style>
         body {
             display: flex;
@@ -70,7 +70,7 @@
         .form-group input:focus {
             outline: none;
             border-color: var(--accent-copper);
-            background: rgba(255, 110, 39, 0.05);
+            background: rgba(246, 198, 103, 0.08);
         }
         .password-wrapper {
             position: relative;
@@ -145,11 +145,12 @@
         </div>
     </div>
 
-    <script src="/config.js"></script>
+    <script src="./config.js"></script>
     <script>
         const token = localStorage.getItem('adminToken');
         if (token) {
-            window.location.href = '/admin/dashboard.html';
+            document.cookie = 'adminToken=' + encodeURIComponent(token) + '; path=/; max-age=86400; SameSite=Lax';
+            window.location.href = '/admin/dashboard';
         }
 
         const form = document.getElementById('loginForm');
@@ -187,7 +188,8 @@
                 if (data.success) {
                     localStorage.setItem('adminToken', data.token);
                     localStorage.setItem('adminUser', JSON.stringify(data.user));
-                    window.location.href = '/admin/dashboard.html';
+                    document.cookie = 'adminToken=' + encodeURIComponent(data.token) + '; path=/; max-age=86400; SameSite=Lax';
+                    window.location.href = '/admin/dashboard';
                 } else {
                     errorMsg.textContent = '✗ ' + (data.error || 'Authentication failed');
                     errorMsg.classList.add('active');

@@ -8,8 +8,9 @@
     justify-content: space-between;
     align-items: center;
     z-index: 10000;
-    background: rgba(5, 5, 6, 0.95);
-    backdrop-filter: blur(10px);
+    background: rgba(15, 42, 31, 0.95);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border-bottom: 1px solid var(--border-chrome);
 }
 #admin-nav .nav-links {
@@ -76,8 +77,8 @@
     color: var(--text-primary);
 }
 .action-card:hover {
-    border-color: var(--accent-cyan);
-    background: rgba(0, 240, 255, 0.05);
+    border-color: var(--accent-copper);
+    background: rgba(246, 198, 103, 0.05);
 }
 .action-icon {
     font-size: 2rem;
@@ -123,7 +124,7 @@
 .form-field select:focus {
     outline: none;
     border-color: var(--accent-copper);
-    background: rgba(255, 110, 39, 0.05);
+    background: rgba(246, 198, 103, 0.05);
 }
 .form-field textarea {
     min-height: 100px;
@@ -136,7 +137,7 @@
     margin-top: 0.5rem;
 }
 .tech-tag {
-    background: rgba(0, 240, 255, 0.1);
+    background: rgba(168, 240, 198, 0.1);
     border: 1px solid var(--accent-cyan);
     padding: 0.5rem 1rem;
     font-family: var(--font-mono);

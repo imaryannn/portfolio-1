@@ -59,6 +59,7 @@ export default function Projects() {
       }
     }).catch(() => {});
   }, []);
+
   return (
     <section id="projects" className="section">
       <div className="container">
@@ -74,6 +75,7 @@ export default function Projects() {
           }}
         >
           <div>
+            <div className="section-accent-bar" />
             <p className="section-label">Work</p>
             <h2 className="section-title">Featured projects</h2>
           </div>
@@ -82,38 +84,27 @@ export default function Projects() {
           </p>
         </FadeIn>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "28px",
-          }}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
           {projects.map((p, i) => (
             <FadeIn key={p.name} delay={i * 80} from="bottom">
-              <div
-                className="glass-card"
-                style={{
-                  borderRadius: "24px",
-                  padding: "32px",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0",
-                  transition: "transform 0.25s ease",
-                  height: "100%",
-                }}
-                onMouseEnter={e => e.currentTarget.style.transform = "translateY(-4px)"}
-                onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}
-              >
+              <div className="project-card" style={{ borderTopColor: p.accent }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "24px" }}>
-                  <span style={{ fontSize: "12px", fontWeight: 500, color: "rgba(248,245,238,0.38)" }}>
+                  <span
+                    style={{
+                      fontSize: "11px",
+                      fontWeight: 600,
+                      letterSpacing: "0.05em",
+                      textTransform: "uppercase",
+                      color: p.accent,
+                    }}
+                  >
                     {p.category}
                   </span>
                   <span
                     style={{
                       width: "8px", height: "8px", borderRadius: "50%",
                       background: p.accent,
-                      opacity: 0.6,
+                      opacity: 0.4,
                       flexShrink: 0,
                     }}
                   />
@@ -153,6 +144,7 @@ export default function Projects() {
                         padding: "5px 12px",
                         borderRadius: "99px",
                         background: "rgba(255,255,255,0.05)",
+                        border: "1px solid rgba(255,255,255,0.06)",
                         color: "rgba(248,245,238,0.52)",
                       }}
                     >
@@ -168,10 +160,13 @@ export default function Projects() {
                     fontWeight: 600,
                     color: p.accent,
                     textDecoration: "none",
-                    transition: "opacity 0.2s",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    transition: "gap 0.2s ease, opacity 0.2s ease",
                   }}
-                  onMouseEnter={e => e.currentTarget.style.opacity = "0.6"}
-                  onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+                  onMouseEnter={e => { e.currentTarget.style.gap = "10px"; e.currentTarget.style.opacity = "0.7"; }}
+                  onMouseLeave={e => { e.currentTarget.style.gap = "6px"; e.currentTarget.style.opacity = "1"; }}
                 >
                   View project →
                 </a>

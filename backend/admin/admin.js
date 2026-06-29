@@ -1,7 +1,19 @@
 async function checkAuth() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlToken = urlParams.get('token');
+    if (urlToken) {
+        localStorage.setItem('adminToken', urlToken);
+        const cleanUrl = window.location.pathname + window.location.hash;
+        window.history.replaceState({}, '', cleanUrl);
+    }
+
     const token = localStorage.getItem('adminToken');
+    if (token) {
+        setAuthCookie(token);
+    }
+
     if (!token && !window.location.pathname.includes('login.html')) {
-        window.location.href = '/admin/login.html';
+        window.location.href = '/admin/login';
         return false;
     }
     if (token && !window.location.pathname.includes('login.html')) {
@@ -14,13 +26,13 @@ async function checkAuth() {
             if (!response.ok) {
                 localStorage.removeItem('adminToken');
                 localStorage.removeItem('adminUser');
-                window.location.href = '/admin/login.html';
+                window.location.href = '/admin/login';
                 return false;
             }
         } catch (error) {
             localStorage.removeItem('adminToken');
             localStorage.removeItem('adminUser');
-            window.location.href = '/admin/login.html';
+            window.location.href = '/admin/login';
             return false;
         }
     }
@@ -33,10 +45,19 @@ function getAuthHeaders() {
         'Authorization': `Bearer ${token}`
     };
 }
+function setAuthCookie(token) {
+    document.cookie = 'adminToken=' + encodeURIComponent(token) + '; path=/; max-age=86400; SameSite=Lax';
+}
+
+function clearAuthCookie() {
+    document.cookie = 'adminToken=; path=/; max-age=0; SameSite=Lax';
+}
+
 document.getElementById('logoutBtn')?.addEventListener('click', () => {
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminUser');
-    window.location.href = '/admin/login.html';
+    clearAuthCookie();
+    window.location.href = '/admin/login';
 });
 async function apiCall(url, options = {}) {
     try {

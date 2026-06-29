@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
+import { useScroll, useMotionValueEvent } from "framer-motion";
+import { useState } from "react";
 
 export default function HeroSection() {
+  const { scrollY } = useScroll();
   const [progress, setProgress] = useState(0);
 
-  useEffect(() => {
-    const onScroll = () => {
-      const p = Math.min(window.scrollY / (window.innerHeight * 0.5), 1);
-      setProgress(p);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const p = Math.min(latest / (window.innerHeight * 0.5), 1);
+    setProgress(p);
+  });
 
   const slideLeft  = `translateX(${-progress * 100}%)`;
   const slideRight = `translateX(${progress * 100}%)`;

@@ -113,17 +113,7 @@ h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; }
   padding-block: clamp(80px, 12vw, 160px);
 }
 
-.section + .section::before,
-footer::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(92%, 900px);
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(246, 198, 103, 0.1), transparent);
-}
+
 
 /* ─── Section header ─── */
 .section-label {
@@ -158,7 +148,7 @@ footer::before {
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  transition: border-color 0.25s ease, background 0.25s ease;
+  transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.4s ease;
 }
 
 .glass-card:hover {
@@ -171,6 +161,126 @@ footer::before {
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* ─── Card with accent top border ─── */
+@utility card-accent-top {
+  position: relative;
+  border-top: 2px solid transparent;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.055);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+}
+
+@utility card-accent-glow {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 0 0 transparent;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+}
+
+.card-accent-glow:hover {
+  transform: translateY(-6px);
+}
+
+/* ─── Section decoration ─── */
+.section-accent-bar {
+  width: 32px;
+  height: 3px;
+  border-radius: 99px;
+  background: #F6C667;
+  margin-bottom: 24px;
+}
+
+/* ─── Light accent glow behind elements ─── */
+@utility accent-glow {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+/* ─── Project card ─── */
+.project-card {
+  border-top: 2px solid transparent;
+  border-radius: 24px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.055);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ─── Skill tag ─── */
+.skill-tag {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(248, 245, 238, 0.75);
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.skill-tag:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #F8F5EE;
+}
+
+/* ─── Social link ─── */
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(248, 245, 238, 0.38);
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 99px;
+  transition: all 0.25s ease;
+}
+
+.social-link:hover {
+  color: #F8F5EE;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ─── Contact meta card ─── */
+.contact-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 16px;
+  padding: 18px 24px;
+  background: rgba(29, 77, 58, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.055);
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.contact-meta:hover {
+  background: rgba(29, 77, 58, 0.28);
+  border-color: rgba(246, 198, 103, 0.15);
 }
 
 /* ─── Scrollbar ─── */

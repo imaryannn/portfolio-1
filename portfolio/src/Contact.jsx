@@ -8,9 +8,28 @@ const meta = [
 ];
 
 export default function Contact() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState("idle");
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("sending");
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: "20b341cc-bebf-48dd-9167-4d4116a4e84e",
+          ...form,
+        }),
+      });
+      if (!res.ok) throw new Error("Failed to send");
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+    }
+  };
 
   return (
     <section id="contact" className="section">
@@ -23,8 +42,8 @@ export default function Contact() {
             alignItems: "center",
           }}
         >
-
           <FadeIn delay={100} from="left">
+            <div className="section-accent-bar" />
             <p className="section-label">Contact</p>
             <h2
               className="section-title"
@@ -47,18 +66,7 @@ export default function Contact() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
               {meta.map(({ label, val }) => (
-                <div
-                  key={label}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    borderRadius: "16px",
-                    padding: "18px 24px",
-                    background: "rgba(29,77,58,0.18)",
-                    border: "1px solid rgba(255,255,255,0.055)",
-                  }}
-                >
+                <div key={label} className="contact-meta">
                   <span style={{ fontSize: "13px", fontWeight: 500, color: "rgba(168,240,198,0.55)" }}>{label}</span>
                   <span style={{ fontSize: "14px", fontWeight: 600, color: "#F8F5EE" }}>{val}</span>
                 </div>
@@ -71,7 +79,7 @@ export default function Contact() {
               className="glass-card"
               style={{ borderRadius: "28px", padding: "48px" }}
             >
-              {sent ? (
+              {status === "sent" ? (
                 <div style={{ padding: "48px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", textAlign: "center" }}>
                   <div
                     style={{
@@ -90,7 +98,7 @@ export default function Contact() {
                 </div>
               ) : (
                 <form
-                  onSubmit={e => { e.preventDefault(); setSent(true); }}
+                  onSubmit={handleSubmit}
                   style={{ display: "flex", flexDirection: "column", gap: "24px" }}
                 >
                   {[
@@ -114,10 +122,10 @@ export default function Contact() {
                           border: "1px solid rgba(255,255,255,0.18)",
                           borderRadius: "14px",
                           outline: "none",
-                          transition: "border-color 0.2s",
+                          transition: "border-color 0.2s, box-shadow 0.2s",
                         }}
-                        onFocus={e => e.target.style.borderColor = "rgba(255,255,255,0.4)"}
-                        onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.18)"}
+                        onFocus={e => { e.target.style.borderColor = "rgba(246,198,103,0.5)"; e.target.style.boxShadow = "0 0 0 3px rgba(246,198,103,0.08)"; }}
+                        onBlur={e => { e.target.style.borderColor = "rgba(255,255,255,0.18)"; e.target.style.boxShadow = "none"; }}
                       />
                     </div>
                   ))}
@@ -140,15 +148,22 @@ export default function Contact() {
                         borderRadius: "14px",
                         outline: "none",
                         resize: "none",
-                        transition: "border-color 0.2s",
+                        transition: "border-color 0.2s, box-shadow 0.2s",
                       }}
-                      onFocus={e => e.target.style.borderColor = "rgba(255,255,255,0.4)"}
-                      onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.18)"}
+                      onFocus={e => { e.target.style.borderColor = "rgba(246,198,103,0.5)"; e.target.style.boxShadow = "0 0 0 3px rgba(246,198,103,0.08)"; }}
+                      onBlur={e => { e.target.style.borderColor = "rgba(255,255,255,0.18)"; e.target.style.boxShadow = "none"; }}
                     />
                   </div>
 
+                  {status === "error" && (
+                    <p style={{ fontSize: "13px", color: "#FF6B6B", textAlign: "center" }}>
+                      Something went wrong. Try again or email me directly.
+                    </p>
+                  )}
+
                   <button
                     type="submit"
+                    disabled={status === "sending"}
                     style={{
                       width: "100%",
                       padding: "16px",
@@ -156,17 +171,17 @@ export default function Contact() {
                       borderRadius: "14px",
                       fontSize: "15px",
                       fontWeight: 600,
-                      background: "#F6C667",
+                      background: status === "sending" ? "rgba(246,198,103,0.5)" : "#F6C667",
                       color: "#0F2A1F",
                       border: "none",
-                      cursor: "pointer",
-                      transition: "opacity 0.2s, transform 0.15s",
+                      cursor: status === "sending" ? "not-allowed" : "pointer",
+                      transition: "opacity 0.2s, transform 0.15s, background 0.2s, box-shadow 0.2s",
                       fontFamily: "'Plus Jakarta Sans', sans-serif",
                     }}
-                    onMouseEnter={e => { e.currentTarget.style.opacity = "0.9"; e.currentTarget.style.transform = "scale(1.01)"; }}
-                    onMouseLeave={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "scale(1)"; }}
+                    onMouseEnter={e => { if (status !== "sending") { e.currentTarget.style.opacity = "0.9"; e.currentTarget.style.transform = "scale(1.01)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(246,198,103,0.2)"; }}}
+                    onMouseLeave={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "none"; }}
                   >
-                    Send message
+                    {status === "sending" ? "Sending…" : "Send message"}
                   </button>
                 </form>
               )}

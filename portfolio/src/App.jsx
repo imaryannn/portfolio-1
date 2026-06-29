@@ -1,5 +1,6 @@
 import "./index.css";
 import { useRef, useState, useEffect } from "react";
+import { useScroll, useMotionValueEvent } from "framer-motion";
 import Nav from "./Nav";
 import PageBackground from "./PageBackground";
 import HeroSection from "./HeroSection";
@@ -14,6 +15,13 @@ export default function App() {
   const rafRef = useRef(null);
   const targetTime = useRef(0);
   const [scrollDark, setScrollDark] = useState(0);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const heroHeight = window.innerHeight;
+    const progress = Math.min(Math.max(latest / (heroHeight * 0.85), 0), 1);
+    setScrollDark(progress);
+  });
 
   useEffect(() => {
     const video = videoRef.current;
@@ -43,17 +51,6 @@ export default function App() {
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const heroHeight = window.innerHeight;
-      const progress = Math.min(Math.max(window.scrollY / (heroHeight * 0.85), 0), 1);
-      setScrollDark(progress);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (

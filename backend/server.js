@@ -12,6 +12,7 @@ const routes = [
     { pattern: /^\/api\/projects\/([^/]+)\/?$/, handler: require('./api/projects/[id]'), param: 'id' },
     { pattern: /^\/api\/skills\/?$/, handler: require('./api/skills') },
     { pattern: /^\/api\/status\/?$/, handler: require('./api/status') },
+    { pattern: /^\/admin\//, handler: require('./api/admin') },
 ];
 
 function readBody(req) {

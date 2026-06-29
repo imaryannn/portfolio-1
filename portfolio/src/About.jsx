@@ -23,6 +23,7 @@ export default function About() {
         >
           {/* Left — header + prose */}
           <FadeIn from="right" style={{ paddingTop: "120px" }}>
+            <div className="section-accent-bar" />
             <p className="section-label">About me</p>
             <h2 className="section-title" style={{ maxWidth: "18ch", marginBottom: "40px" }}>
               Building reliable<br />
@@ -121,6 +122,7 @@ export default function About() {
                 {techs.map(t => (
                   <span
                     key={t}
+                    className="skill-tag"
                     style={{
                       fontSize: "13px",
                       fontWeight: 500,

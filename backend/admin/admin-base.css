@@ -1,20 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
 :root {
-    --bg-primary: #050506;
-    --bg-secondary: #0a0a0c;
-    --bg-card: #0d0d10;
-    --text-primary: #f0f0f0;
-    --text-secondary: #a0a0a5;
-    --text-muted: #66666a;
-    --accent-copper: #ff6e27;
-    --accent-red: #ff3333;
-    --accent-cyan: #00f0ff;
-    --border-chrome: rgba(255, 255, 255, 0.15);
-    --border-glow: rgba(255, 110, 39, 0.4);
-    --grad-copper: linear-gradient(135deg, #ff6e27 0%, #ff3333 100%);
+    --bg-primary: #0F2A1F;
+    --bg-secondary: #1D4D3A;
+    --bg-card: rgba(255, 255, 255, 0.055);
+    --text-primary: #F8F5EE;
+    --text-secondary: rgba(248, 245, 238, 0.62);
+    --text-muted: rgba(248, 245, 238, 0.38);
+    --accent-copper: #F6C667;
+    --accent-red: #FF6B6B;
+    --accent-cyan: #A8F0C6;
+    --border-chrome: rgba(255, 255, 255, 0.1);
+    --border-glow: rgba(246, 198, 103, 0.4);
+    --grad-copper: linear-gradient(135deg, #F6C667 0%, #FFD95A 100%);
     --grad-surface: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
-    --font-heading: 'Space Grotesk', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
+    --font-heading: 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'Plus Jakarta Sans', monospace;
     --font-body: 'Inter', -apple-system, sans-serif;
     --container-w: 1200px;
 }
@@ -303,7 +303,7 @@ button {
     gap: 10px;
 }
 .btn-link:hover {
-    text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+    text-shadow: 0 0 8px rgba(168, 240, 198, 0.5);
 }
 .section-label {
     font-family: var(--font-mono);

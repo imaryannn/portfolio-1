@@ -1,62 +1,23 @@
-import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+
+const variants = {
+  bottom: { y: 60 },
+  left: { x: -60 },
+  right: { x: 60 },
+  top: { y: -60 },
+};
 
 export default function FadeIn({ children, from = "bottom", delay = 0, style = {}, ...props }) {
-  const ref = useRef(null);
-  const [progress, setProgress] = useState(-1);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const onScroll = () => {
-      const rect = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const p = 1 - (rect.bottom / (vh + rect.height));
-      setProgress(p);
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const entering = progress < 0;
-  const leaving = progress > 0.75;
-
-  const inAmount = entering ? 1 : 0;
-  const outAmount = leaving ? (progress - 0.75) / 0.25 : 0;
-  const amount = Math.min(Math.max(entering ? inAmount : outAmount, 0), 1);
-  const opacity = entering ? Math.max(1 - inAmount, 0) : Math.max(1 - outAmount, 0);
-
-  const getTransform = () => {
-    if (!entering && !leaving) return "translate(0,0)";
-    const pct = `${amount * 100}%`;
-    if (entering) {
-      if (from === "left")  return `translateX(-${pct})`;
-      if (from === "right") return `translateX(${pct})`;
-      if (from === "top")   return `translateY(-${pct})`;
-      return `translateY(${pct})`;
-    }
-    if (from === "left")  return `translateX(${pct})`;
-    if (from === "right") return `translateX(-${pct})`;
-    if (from === "top")   return `translateY(${pct})`;
-    return `translateY(-${pct})`;
-  };
-
   return (
-    <div
-      ref={ref}
-      style={{
-        opacity,
-        transform: getTransform(),
-        transition: `opacity 0.05s linear, transform 0.05s linear`,
-        transitionDelay: entering ? `${delay}ms` : "0ms",
-        willChange: "transform, opacity",
-        ...style,
-      }}
+    <motion.div
+      initial={{ opacity: 0, ...variants[from] }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: delay / 1000 }}
+      style={style}
       {...props}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }
