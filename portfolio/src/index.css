@@ -15,7 +15,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-section { overflow: visible; }
+section { overflow: clip; overflow-clip-margin: 0px; }
 
 body {
   background: #0F2A1F;
@@ -308,6 +308,19 @@ input, textarea { background: transparent; font-family: 'Inter', sans-serif; }
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* ─── Nav visibility ─── */
+.desktop-nav { display: block; }
+.mobile-nav  { display: none; }
+@media (width <= 768px) {
+  .desktop-nav { display: none; }
+  .mobile-nav  { display: block; }
+}
+
+/* ─── Hero stats hide on mobile ─── */
+@media (width <= 768px) {
+  .hero-stats { display: none !important; }
 }
 
 /* ─── Mobile overrides ─── */

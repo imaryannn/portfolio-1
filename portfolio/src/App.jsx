@@ -20,6 +20,20 @@ export default function App() {
   const [scrollDark, setScrollDark] = useState(0);
 
   useEffect(() => {
+    const isMobile = window.innerWidth <= 768;
+
+    if (isMobile) {
+      const onScroll = () => {
+        const y = window.scrollY;
+        setScrollY(y);
+        const heroHeight = window.innerHeight;
+        const progress = Math.min(Math.max(y / (heroHeight * 0.85), 0), 1);
+        setScrollDark(progress);
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      return () => window.removeEventListener("scroll", onScroll);
+    }
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),

@@ -42,6 +42,7 @@ export default function HeroSection() {
         </div>
 
         <div
+          className="hero-stats"
           style={{
             display: "flex", flexDirection: "column", gap: "clamp(16px, 3vw, 36px)", maxWidth: "min(260px, 100%)",
             transform: slideRight, opacity,
