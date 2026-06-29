@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import FadeIn from "./FadeIn";
 
 const links = [
   { label: "About",    href: "#about" },
@@ -18,15 +19,10 @@ export default function Nav() {
   }, []);
 
   return (
+    <FadeIn from="top" delay={0} style={{ position: "fixed", top: "20px", left: "50%", transform: "translateX(-50%)", zIndex: 50, width: "fit-content" }}>
     <nav
       style={{
-        position: "fixed",
-        top: "20px",
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: 50,
         width: "fit-content",
-        transition: "all 0.5s ease",
       }}
     >
       <div
@@ -109,5 +105,6 @@ export default function Nav() {
         </ul>
       </div>
     </nav>
+    </FadeIn>
   );
 }

@@ -102,7 +102,7 @@ export default function Contact() {
                   style={{ display: "flex", flexDirection: "column", gap: "24px" }}
                 >
                   {[
-                    { id: "name",  label: "Your name",  type: "text",  placeholder: "Aryan" },
+                    { id: "name",  label: "Your name",  type: "text",  placeholder: "Enter name" },
                     { id: "email", label: "Email",       type: "email", placeholder: "you@example.com" },
                   ].map(({ id, label, type, placeholder }) => (
                     <div key={id} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
