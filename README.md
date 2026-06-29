@@ -85,6 +85,7 @@ JWT_SECRET=random256bithex
 SETUP_KEY=random256bithex
 ADMIN_EMAIL=admin@example.com
 ADMIN_PASSWORD=yourpassword
+MONGODB_URI=mongodb+srv://<user>:<password>@cluster.xxxxx.mongodb.net/
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
