@@ -22,7 +22,7 @@ export default function About() {
           }}
         >
           {/* Left — header + prose */}
-          <SlideIn from="right" style={{ paddingTop: "120px" }}>
+          <SlideIn from="left" style={{ paddingTop: "120px" }}>
             <div className="section-accent-bar" />
             <p className="section-label">About me</p>
             <h2 className="section-title" style={{ maxWidth: "18ch", marginBottom: "40px" }}>
@@ -73,7 +73,7 @@ export default function About() {
           </SlideIn>
 
           {/* Right — glass card */}
-          <SlideIn delay={150} from="left" style={{ paddingTop: "120px", maxWidth: "420px", marginLeft: "auto" }}>
+          <SlideIn delay={150} from="right" style={{ paddingTop: "120px", maxWidth: "420px", marginLeft: "auto" }}>
             <div className="glass-card" style={{ borderRadius: "28px", padding: "40px" }}>
               <div
                 style={{

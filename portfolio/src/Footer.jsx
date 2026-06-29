@@ -23,7 +23,7 @@ const LockIcon = () => (
 export default function Footer() {
   return (
     <footer style={{ position: "relative", padding: "48px 0" }}>
-      <SlideIn style={{ width: "100%" }}>
+      <SlideIn from="bottom" style={{ width: "100%" }}>
       <div
         className="container"
         style={{
