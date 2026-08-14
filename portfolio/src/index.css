@@ -565,11 +565,46 @@ img, svg, video { display: block; max-width: 100%; }
 }
 
 @media (max-width: 767px) {
+  .hero {
+    padding-top: clamp(80px, 14vh, 110px);
+    padding-bottom: clamp(150px, 28vh, 220px);
+  }
+
   .hero-lottie {
     left: 50%;
-    top: 65vh;
+    top: auto;
+    bottom: clamp(96px, 16vh, 130px);
     transform: translateX(-50%);
-    width: min(72vw, 420px);
+    width: min(52vw, 300px);
+  }
+}
+
+/* Short / landscape phone viewports: no room for the lottie or oversized type */
+@media (max-width: 900px) and (max-height: 520px) {
+  .hero {
+    padding-top: 84px;
+    padding-bottom: 72px;
+  }
+
+  .hero__word {
+    font-size: clamp(2rem, 9.5vw, 3.2rem);
+  }
+
+  .hero__word--lead {
+    font-size: clamp(1.6rem, 7.5vw, 2.5rem);
+  }
+
+  .hero__headline {
+    font-size: clamp(2rem, 9.5vw, 3.2rem);
+  }
+
+  .hero__tag {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  .hero-lottie {
+    display: none;
   }
 }
 
