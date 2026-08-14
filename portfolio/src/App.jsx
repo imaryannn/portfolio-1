@@ -1,105 +1,66 @@
 import "./index.css";
-import { useRef, useState, useEffect } from "react";
-import Lenis from "lenis";
-import Nav from "./Nav";
-import PageBackground from "./PageBackground";
-import HeroSection from "./HeroSection";
-import About from "./About";
-import Projects from "./Projects";
-import Skills from "./Skills";
-import Contact from "./Contact";
-import Footer from "./Footer";
-import { LenisScrollContext } from "./LenisScrollContext";
+import { useCallback, useEffect, useState } from "react";
+import { useReducedMotion } from "framer-motion";
+import { initLenis, destroyLenis } from "./lib/scroll";
+import Cursor from "./components/Cursor";
+import Preloader from "./components/Preloader";
+import Nav from "./components/Nav";
+import Hero from "./components/Hero";
+import Intro from "./components/Intro";
+import Projects from "./components/Projects";
+import Capabilities from "./components/Capabilities";
+import About from "./components/About";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
 
 export default function App() {
-  const videoRef = useRef(null);
-  const rafRef = useRef(null);
-  const targetTime = useRef(0);
-  const lenisRef = useRef(null);
-  const [scrollY, setScrollY] = useState(0);
-  const [scrollDark, setScrollDark] = useState(0);
+  const reduced = useReducedMotion();
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const isMobile = window.innerWidth <= 768;
+    if (!loaded) return;
+    initLenis({ reducedMotion: reduced ?? false });
+    return () => destroyLenis();
+  }, [loaded, reduced]);
 
-    if (isMobile) {
-      const onScroll = () => {
-        const y = window.scrollY;
-        setScrollY(y);
-        const heroHeight = window.innerHeight;
-        const progress = Math.min(Math.max(y / (heroHeight * 0.85), 0), 1);
-        setScrollDark(progress);
-      };
-      window.addEventListener("scroll", onScroll, { passive: true });
-      return () => window.removeEventListener("scroll", onScroll);
-    }
-
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: "vertical",
-      smoothWheel: true,
-    });
-    lenisRef.current = lenis;
-
-    lenis.on("scroll", (e) => {
-      setScrollY(e.animatedScroll);
-      const heroHeight = window.innerHeight;
-      const progress = Math.min(Math.max(e.animatedScroll / (heroHeight * 0.85), 0), 1);
-      setScrollDark(progress);
-    });
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    return () => lenis.destroy();
-  }, []);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    const onLoaded = () => {
-      video.pause();
-      video.currentTime = video.duration / 2;
-    };
-    video.addEventListener("loadedmetadata", onLoaded);
-    return () => video.removeEventListener("loadedmetadata", onLoaded);
-  }, []);
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      const video = videoRef.current;
-      if (!video || !video.duration) return;
-      targetTime.current = (1 - e.clientX / window.innerWidth) * video.duration;
-      if (rafRef.current) return;
-      rafRef.current = requestAnimationFrame(() => {
-        rafRef.current = null;
-        const v = videoRef.current;
-        if (!v) return;
-        if (v.fastSeek) v.fastSeek(targetTime.current);
-        else v.currentTime = targetTime.current;
-      });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  const handlePreloadDone = useCallback(() => setLoaded(true), []);
 
   return (
-    <LenisScrollContext.Provider value={scrollY}>
-      <PageBackground videoRef={videoRef} scrollDark={scrollDark} />
-      <div className="page-content">
-        <Nav />
-        <HeroSection />
-        <About />
+    <>
+      <Cursor />
+      <Preloader onDone={handlePreloadDone} />
+      <a
+        href="#main"
+        style={{
+          position: "fixed",
+          top: -100,
+          left: 16,
+          zIndex: 300,
+          background: "#111111",
+          color: "#F5EDC9",
+          padding: "12px 20px",
+          borderRadius: 999,
+          fontFamily: "'Space Mono', monospace",
+          fontSize: 12,
+          letterSpacing: "0.1em",
+          textTransform: "uppercase",
+          transition: "top 0.2s ease",
+        }}
+        onFocus={(e) => (e.currentTarget.style.top = "16px")}
+        onBlur={(e) => (e.currentTarget.style.top = "-100px")}
+      >
+        Skip to content
+      </a>
+      <Nav />
+      <main id="main">
+        <Hero />
+        <Intro />
         <Projects />
-        <Skills />
+        <Capabilities />
+        <About />
         <Contact />
-        <Footer />
-      </div>
-    </LenisScrollContext.Provider>
+      </main>
+      <Footer />
+    </>
   );
 }

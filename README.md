@@ -1,23 +1,26 @@
 # Portfolio — Aryan
 
-A full-stack developer portfolio with a glass-morphism design, smooth scroll animations, and a minimal admin panel.
+A full-stack developer portfolio with an editorial, cream-and-ink visual system, oversized grotesk typography, a case-study-style project showcase, and a minimal admin panel.
 
 ## Tech Stack
 
 - **Frontend** — React 19, Vite 8, Tailwind v4, Framer Motion
-- **Backend** — Node.js (raw HTTP server, no framework), JWT auth
-- **Video** — H.264 hero background with mouse-driven seeking
+- **Scroll** — Lenis smooth scrolling (desktop, disabled for `prefers-reduced-motion`)
+- **Backend** — Node.js (raw HTTP server, no framework), JWT auth, MongoDB
 - **Deploy** — Frontend on Vercel, Backend on Vercel (serverless)
 
 ## Features
 
-- Smooth Lenis scroll (desktop only)
-- Slide-in/out scroll-triggered animations
-- Glass-card UI with backdrop blur
-- Hero video background seeking on mouse move
-- Admin panel (dashboard, projects, skills, profile CRUD)
+- Editorial design system — cream `#F5EDC9` / ink `#111111`, 1px hairlines, Archivo display type + Space Mono labels
+- Art-directed hero with staggered masked type reveals and geometric accents
+- Case-study style project showcase with hand-drawn line-art wireframes per project
+- Editorial capabilities list, statement-driven intro and about sections
+- Full-screen black navigation menu
+- Custom cursor (desktop only, respects reduced motion + touch devices)
+- Horizontal marquee rhythm strips
 - Web3Forms contact form
-- Responsive with hamburger nav on mobile
+- Admin panel (dashboard, projects, skills, profile CRUD)
+- Responsive at every breakpoint, `prefers-reduced-motion` support throughout
 
 ## Getting Started
 
@@ -39,31 +42,32 @@ npm run dev
 ```
 portfolio/          # React frontend (Vite)
   src/
-    App.jsx         # Main app, Lenis init, context
-    Nav.jsx         # Desktop pill + mobile hamburger
-    SlideIn.jsx     # Scroll-triggered slide/fade
-    HeroSection.jsx # Hero with video bg
-    About.jsx
-    Projects.jsx
-    Skills.jsx
-    Contact.jsx
-    Footer.jsx
-    PageBackground.jsx
+    App.jsx         # Main app, Lenis init, skip-link
+    api.js          # Backend API helpers
+    data.js         # Fallback projects, capabilities, socials
+    lib/
+      scroll.js     # Lenis lifecycle + anchor scrolling
+    components/
+      Nav.jsx       # Wordmark + full-screen menu overlay
+      Hero.jsx      # Oversized type, rotating badge, geometric accents
+      Intro.jsx     # Personal statement + marquee
+      Projects.jsx  # Editorial case-study showcase
+      ProjectVisual.jsx # Inline SVG line-art wireframes
+      Capabilities.jsx  # Editorial capability rows
+      About.jsx     # Statement + metadata
+      Contact.jsx   # Web3Forms contact form
+      Footer.jsx    # Black finale CTA + socials
+      Marquee.jsx   # Horizontal running text
+      Reveal.jsx    # Scroll-triggered reveal wrapper
+      Cursor.jsx    # Custom cursor
   public/
-    hero.mp4
     favicon.svg
 
 backend/            # Node.js backend
   server.js         # HTTP server, routing, auth
-  api/
-    auth/login.js   # Rate-limited login
-    admin/index.js  # Admin file server + JWT check
-    projects.js     # CRUD
-    skills.js
-    profile.js
+  api/              # auth, projects, skills, profile, ai
   admin/            # Static admin HTML/JS/CSS
-  lib/
-    auth.js         # JWT, password hash
+  lib/              # JWT auth, MongoDB connection
 ```
 
 ## Admin Panel
