@@ -52,7 +52,7 @@ export default function Contact() {
                 <br />
                 idea?
                 <br />
-                Let's <em className="display--italic">talk</em><span style={{ color: "transparent", WebkitTextStroke: "1.5px rgba(17,17,17,0.9)" }}>.</span>
+                Let's <em className="display--italic">Connect</em><span style={{ color: "transparent", WebkitTextStroke: "1.5px rgba(17,17,17,0.9)" }}>.</span>
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
