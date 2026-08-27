@@ -45,7 +45,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.26, ease }}
         >
-          somewhere between idea's and it's creation
+          somewhere between idea and it's creation
         </motion.p>
       </div>
 
