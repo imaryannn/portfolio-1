@@ -30,9 +30,8 @@ export default function About() {
                     marginBottom: "clamp(28px, 4vw, 56px)",
                   }}
                 >
-                  17-year-old
                   <br />
-                  builder, shipping
+                  Forgeborn, shipping
                   <br />
                   <em className="display--italic">real products</em>
                   <span style={{ color: "transparent", WebkitTextStroke: "1.5px rgba(17,17,17,0.9)" }}>.</span>
