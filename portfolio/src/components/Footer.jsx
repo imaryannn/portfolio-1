@@ -23,7 +23,7 @@ export default function Footer() {
       <div className="container" style={{ paddingTop: "clamp(72px, 10vw, 140px)", paddingBottom: "clamp(32px, 4vw, 56px)" }}>
         <Reveal>
           <p className="label-mono" style={{ color: "rgba(245,237,201,0.5)", marginBottom: "clamp(28px, 4vw, 56px)" }}>
-            ( 06 ) — Let's work together
+            ( 07 ) — Let's work together
           </p>
         </Reveal>
 

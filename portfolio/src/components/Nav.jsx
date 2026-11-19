@@ -12,7 +12,8 @@ const links = [
   { label: "Work", href: "#projects", index: "01" },
   { label: "Capabilities", href: "#capabilities", index: "02" },
   { label: "About", href: "#about", index: "03" },
-  { label: "Contact", href: "#contact", index: "04" },
+  { label: "Certificates", href: "#certificates", index: "04" },
+  { label: "Contact", href: "#contact", index: "05" },
 ];
 
 export default function Nav() {

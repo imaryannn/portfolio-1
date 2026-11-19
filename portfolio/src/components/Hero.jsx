@@ -56,7 +56,7 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.8, ease }}
         >
-          [ 07 ] SHIPPED PRODUCTS
+          [ 08 ] SHIPPED PRODUCTS
         </motion.p>
 
         <motion.p

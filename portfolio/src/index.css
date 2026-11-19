@@ -756,6 +756,86 @@ img, svg, video { display: block; max-width: 100%; }
   color: #F5EDC9;
 }
 
+/* ─────────────────────────── Certificates ─────────────────────────── */
+
+.certificates-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: clamp(40px, 5vw, 72px);
+}
+
+.certificates-heading > .body-text { max-width: 32ch; }
+
+.certificates-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(40px, 5vw, 72px) clamp(24px, 4vw, 56px);
+}
+
+.certificate-card {
+  border-top: 1px solid rgba(17, 17, 17, 0.85);
+  padding-top: 20px;
+}
+
+.certificate-preview {
+  display: block;
+  position: relative;
+  background: #FAF4DC;
+  border: 1px solid rgba(17, 17, 17, 0.16);
+  padding: clamp(12px, 2vw, 28px);
+}
+
+.certificate-preview img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+}
+
+.certificate-preview__label {
+  display: block;
+  width: fit-content;
+  margin: 16px 0 0 auto;
+  border-bottom: 1px solid currentColor;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.875rem;
+}
+
+.certificate-preview:hover,
+.certificate-preview:focus-visible { background: #fffaf0; }
+
+.certificate-preview:focus-visible {
+  outline: 2px solid #111111;
+  outline-offset: 5px;
+}
+
+.certificate-copy { padding-top: 24px; }
+
+.certificate-category {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+  color: rgba(17, 17, 17, 0.62);
+}
+
+.certificate-copy h3 {
+  font-size: clamp(1.5rem, 2.4vw, 2.4rem);
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+}
+
+.certificate-issuer { font-size: 1rem; margin: 12px 0; }
+.certificate-copy .body-text { font-size: 1rem; max-width: 55ch; }
+
+@media (max-width: 640px) {
+  .certificates-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
 /* ─────────────────────────── About / meta ─────────────────────────── */
 
 .meta-block {

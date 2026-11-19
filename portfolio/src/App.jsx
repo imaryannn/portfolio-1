@@ -10,6 +10,7 @@ import Intro from "./components/Intro";
 import Projects from "./components/Projects";
 import Capabilities from "./components/Capabilities";
 import About from "./components/About";
+import Certificates from "./components/Certificates";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
@@ -58,6 +59,7 @@ export default function App() {
         <Projects />
         <Capabilities />
         <About />
+        <Certificates />
         <Contact />
       </main>
       <Footer />

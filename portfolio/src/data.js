@@ -1,4 +1,15 @@
+export const PARALLEL_CAFE_PROJECT = {
+  name: "Parallel Cafe",
+  category: "Concept Café Landing Page",
+  kind: "parallelcafe",
+  desc: "A landing page for a concept café, bringing its identity to life through expressive typography, smooth animations, an interactive sample menu and a 3D coffee bag.",
+  stack: ["Next.js", "TypeScript", "GSAP", "Three.js", "Lenis"],
+  link: "https://parallelcafee.vercel.app/",
+  ratio: "16 / 10",
+};
+
 export const FALLBACK_PROJECTS = [
+  PARALLEL_CAFE_PROJECT,
   {
     name: "Orian",
     category: "AI Platform",

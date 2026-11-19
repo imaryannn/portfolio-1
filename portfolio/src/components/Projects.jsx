@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Reveal from "./Reveal";
-import { FALLBACK_PROJECTS, KINDS } from "../data";
+import { FALLBACK_PROJECTS, KINDS, PARALLEL_CAFE_PROJECT } from "../data";
 import { fetchProjects } from "../api";
 
 export default function Projects() {
@@ -22,7 +22,12 @@ export default function Projects() {
             ratio: fallback?.ratio || "4 / 3",
           };
         });
-        setProjects(mapped);
+        // Keep this local project visible even before it is added in the admin panel.
+        const hasParallelCafe = mapped.some((project) =>
+          project.link.replace(/\/$/, "") === PARALLEL_CAFE_PROJECT.link.replace(/\/$/, "") ||
+          project.name.toLowerCase().replace(/[^a-z0-9]/g, "") === "parallelcafe"
+        );
+        setProjects(hasParallelCafe ? mapped : [PARALLEL_CAFE_PROJECT, ...mapped]);
       })
       .catch(() => {});
   }, []);

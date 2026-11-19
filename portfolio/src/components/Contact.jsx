@@ -36,7 +36,7 @@ export default function Contact() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(40px, 7vw, 120px)" }} className="contact-grid">
           <div>
             <Reveal>
-              <p className="label-mono" style={{ marginBottom: 20 }}>( 05 ) — Contact</p>
+              <p className="label-mono" style={{ marginBottom: 20 }}>( 06 ) — Contact</p>
               <h2
                 style={{
                   fontFamily: "'Archivo', sans-serif",
