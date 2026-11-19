@@ -2,6 +2,24 @@
 
 A full-stack developer portfolio with an editorial, cream-and-ink visual system, oversized grotesk typography, a case-study-style project showcase, and a minimal admin panel.
 
+## Screenshots
+
+### Desktop home
+
+![Desktop home page with oversized typography and animated artwork](docs/screenshots/desktop-home.jpg)
+
+### Selected projects
+
+![Projects section featuring the Parallel Cafe concept landing page](docs/screenshots/desktop-projects.jpg)
+
+### Certificates
+
+![Certificates section with achievement previews and short descriptions](docs/screenshots/desktop-certificates.jpg)
+
+### Mobile
+
+<img src="docs/screenshots/mobile-home.jpg" alt="Mobile home page with responsive typography and navigation" width="390" />
+
 ## Tech Stack
 
 - **Frontend** — React 19, Vite 8, Tailwind v4, Framer Motion
