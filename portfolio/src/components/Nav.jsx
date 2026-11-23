@@ -9,11 +9,12 @@ import {
 import { scrollToId, stopLenis, startLenis } from "../lib/scroll";
 
 const links = [
-  { label: "Work", href: "#projects", index: "01" },
-  { label: "Capabilities", href: "#capabilities", index: "02" },
-  { label: "About", href: "#about", index: "03" },
-  { label: "Certificates", href: "#certificates", index: "04" },
-  { label: "Contact", href: "#contact", index: "05" },
+  { label: "Showreel", href: "#showreel", index: "01" },
+  { label: "Work", href: "#projects", index: "02" },
+  { label: "Capabilities", href: "#capabilities", index: "03" },
+  { label: "About", href: "#about", index: "04" },
+  { label: "Certificates", href: "#certificates", index: "05" },
+  { label: "Contact", href: "#contact", index: "06" },
 ];
 
 export default function Nav() {

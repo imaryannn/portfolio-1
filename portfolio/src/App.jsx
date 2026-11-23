@@ -6,6 +6,7 @@ import Cursor from "./components/Cursor";
 import Preloader from "./components/Preloader";
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
+import Showreel from "./components/Showreel";
 import Intro from "./components/Intro";
 import Projects from "./components/Projects";
 import Capabilities from "./components/Capabilities";
@@ -55,6 +56,7 @@ export default function App() {
       <Nav />
       <main id="main">
         <Hero />
+        <Showreel />
         <Intro />
         <Projects />
         <Capabilities />

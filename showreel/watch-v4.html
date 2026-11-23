@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aryan · Portfolio film</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#171815;color:#f5edcc;font-family:Arial,Helvetica,sans-serif}main{max-width:1100px;margin:auto;padding:clamp(16px,4vw,48px)}h1{font-size:clamp(32px,6vw,74px);letter-spacing:-.07em;line-height:1;margin:0 0 .4em}h1 i{font-family:Georgia,serif;font-weight:400}video{width:100%;display:block;aspect-ratio:16/9;background:#171815}.scene{display:flex;align-items:center;flex-wrap:wrap;gap:.8rem 1.2rem;padding:16px 0;border-bottom:1px solid #626251}.scene span{color:#d1c9ad}.scene b{font-weight:600}.scene a{color:#fabb97}a{color:inherit;text-underline-offset:.2em}a:focus-visible,button:focus-visible,video:focus-visible{outline:3px solid #ff8d67;outline-offset:4px}h2{margin:32px 0 12px;font-size:24px;letter-spacing:-.04em}ul{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:0 20px;padding:0;list-style:none}li a{display:block;border-top:1px solid #525348;padding:14px 0}button{display:inline-block;background:transparent;color:#f5edcc;border:1px solid #737461;padding:8px 12px;border-radius:30px;margin:2px 4px 2px 0;cursor:pointer}button:hover,button[aria-current]{color:#171815;background:#f5edcc}footer{padding:1rem 0 2rem}footer a{margin-right:1.3em}
+</style>
+<main>
+<h1>Aryan <i>/ Portfolio film</i></h1>
+<video id="film" controls playsinline preload="metadata" aria-label="Aryan’s portfolio showreel" src="aryan-portfolio-showreel-v4.mp4">Your browser can download the <a href="aryan-portfolio-showreel-v4.mp4">MP4</a>.</video>
+<div class="scene" aria-label="Links for the current chapter"><span>On screen</span><b id="current">Meet Aryan</b><span id="dest"></span></div>
+<h2>Jump to a chapter</h2>
+<div id="chapters"></div>
+<h2>Explore the projects</h2>
+<ul>
+<li><a id="cafe" href="https://parallelcafee.vercel.app/" target="_blank" rel="noopener">Parallel Cafe</a></li>
+<li><a id="orian" href="https://oriannn.vercel.app" target="_blank" rel="noopener">Orian</a></li>
+<li><a id="zyro" href="https://zyromeet.onrender.com/" target="_blank" rel="noopener">ZyroMeet</a></li>
+<li><a id="storage" href="https://telstorage.vercel.app/" target="_blank" rel="noopener">TelStorage</a></li>
+<li><a id="pdf" href="https://imaryannn.github.io/wpdf/" target="_blank" rel="noopener">WPDF Toolkit</a></li>
+<li><a id="mail" href="https://prioramail.vercel.app/" target="_blank" rel="noopener">Prioramail</a></li>
+<li><a id="chat" href="https://nodechat-aivw.onrender.com/" target="_blank" rel="noopener">NodeChat</a></li>
+<li><a id="sync" href="https://syncyt.onrender.com/" target="_blank" rel="noopener">Syncyt</a></li>
+</ul>
+<footer><a id="github" href="https://github.com/imaryannn" target="_blank" rel="noopener">GitHub</a><a id="linkedin" href="https://www.linkedin.com/in/aryan-2064153a0/" target="_blank" rel="noopener">LinkedIn</a></footer>
+</main>
+<script>
+const scenes=[
+  [0,'Meet Aryan',[]],[264/60,'Parallel Cafe',['cafe']],[640/60,'Orian',['orian']],
+  [1018/60,'ZyroMeet',['zyro']],[1394/60,'Everyday tools',['storage','pdf','mail']],
+  [1600/60,'Realtime projects',['chat','sync']],[1789/60,'Connect',['github','linkedin']]
+];
+const film=document.getElementById('film');
+const nav=document.getElementById('chapters');
+const buttons=scenes.map(([time,title])=>{
+  const button=document.createElement('button');
+  button.type='button';button.textContent=title;
+  button.addEventListener('click',()=>{film.currentTime=time;film.play().catch(()=>{});});
+  nav.append(button);return button;
+});
+let previous=-1;
+function sync(){
+  const idx=scenes.reduce((latest,[time],i)=>film.currentTime>=time?i:latest,0);
+  if(idx===previous)return;
+  previous=idx;
+  const [,title,ids]=scenes[idx];
+  document.getElementById('current').textContent=title;
+  const dest=document.getElementById('dest');dest.replaceChildren();
+  ids.forEach((id,i)=>{
+    const origin=document.getElementById(id);
+    const link=document.createElement('a');link.href=origin.href;link.target='_blank';link.rel='noopener';
+    link.textContent=ids.length===1?'Visit project':origin.textContent;
+    link.setAttribute('aria-label','Open '+origin.textContent);
+    if(i)dest.append(' · ');dest.append(link);
+  });
+  buttons.forEach((b,i)=>{if(i===idx)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');});
+}
+film.addEventListener('timeupdate',sync);film.addEventListener('seeked',sync);sync();
+</script>
+</html>
